@@ -5,7 +5,7 @@ function html_table($rows)
 {
 	$ret = "";
 	$table_headers = $rows[0];
-	$ret = $ret . "<table style =\"width:100%; border: 2px solid black;\">";
+	$ret = $ret . "<table style =\"width:100%;\">";
 	foreach(array_keys($table_headers) as &$column_name)
 		$ret = $ret . "<th style = \"text-align: left\">" . $column_name . "</th>";
 
@@ -13,7 +13,7 @@ function html_table($rows)
 	{
 		$ret = $ret . "<tr>";
 		foreach($individual_row as &$value)
-			$ret = $ret . "<td>" . $value . "</td>";
+			$ret = $ret . "<td style = \"\">" . $value . "</td>";
 		$ret = $ret . "</tr>";
 	}
 
