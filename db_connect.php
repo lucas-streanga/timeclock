@@ -1,12 +1,10 @@
 <?php
 
-function db_connect()
+function db_connect($dbname)
 {
 	$host = 'localhost';
 	$dbusername = 'root';
 	$dbpassword = 'w,eFd@U!!G,E]6.S__yvPS:A';
-	
-	$dbname = 'timeclock';
 
 	//Now open a connection to the database
 

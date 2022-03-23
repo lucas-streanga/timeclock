@@ -6,15 +6,30 @@ ini_set('display_errors', 1);  // ensure that faires will be seen
 ini_set('display_startup_errors', 1); // display faires that didn't born
 
 include "db_connect.php";
+include "report_gen.php";
+
+function test_table($conn)
+{
+	//We're gonna try to run a query and print the results in a table!
+    $query = $conn->prepare("SELECT * FROM test_table");
+    $query->execute();
+
+    $rows = $query->fetchall(PDO::FETCH_ASSOC);
+    echo "Table! <br><br>";
+    echo html_table($rows);
+}
+
 
 echo "This is just a test page so far :)<br><br>";
 
 
-$conn = db_connect();
+$conn = db_connect("test");
 
 if($conn)
 {
 	echo 'Success! Able to connect to the database.';
+
+	test_table($conn);
 }
 else
 {
