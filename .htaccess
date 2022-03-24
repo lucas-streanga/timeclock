@@ -1,0 +1,4 @@
+<FilesMatch "\.(sh|md|css)$">
+Order Allow,Deny
+   Deny from all
+</FilesMatch>

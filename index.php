@@ -5,8 +5,8 @@ error_reporting(-1); // display all faires
 ini_set('display_errors', 1);  // ensure that faires will be seen
 ini_set('display_startup_errors', 1); // display faires that didn't born
 
-include "db_connect.php";
-include "report_gen.php";
+include "include/db_connect.php";
+include "include/report_gen.php";
 
 function test_table($conn)
 {
