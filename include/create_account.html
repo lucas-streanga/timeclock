@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+Display input for a username and an ID. The SQL and logic is handled in create_account.php
+This is a "fake" html file. What this means is that this html file, on its own, cannot submit the form.
+It must be included in a PHP file.
+-->
+<html>
+    <head>
+        <title>Create Account</title>
+		<link rel='stylesheet' href='form_style.css'>
+    </head>
+    <body>
+        <div id='navbar'> 
+			<!-- Don't know if we'll need a navigation bar, but here it is to go to different website parts -->
+            <a href='./index.php'>Home</a>  
+        </div>
+        <div id='form-container'>
+            <form method="post" action="";><fieldset>
+                <legend align="center" style="font-size:24px">Create Account</legend>
+
+                <label id="username_label" for=“username">Username</label>
+                <input type="text" name="username" placeholder=" Enter a Username">
+
+                <label id="id_label" for=“id">ID</label>
+                <input type="text" name="id" placeholder=" Enter a unique User ID">
+				<div align="center">
+                	<input id="submit_button" type="submit" name="submit">
+				</div>
+            </form></fieldset>
+        </div>
+    </body>
+</html>
