@@ -7,6 +7,7 @@ ini_set('display_startup_errors', 1); // display faires that didn't born
 
 include "include/db_connect.php";
 include "include/report_gen.php";
+include "include/navbar.html";
 
 function test_table($conn)
 {
