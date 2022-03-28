@@ -1,0 +1,18 @@
+/* Just style the print button however you like */
+#print_button
+{
+	width: 10%;
+    background-color: #9999FF;
+    color: white;
+    padding: 12px 0;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+#print_button:hover
+{
+    background-color: #9381FF;
+
+

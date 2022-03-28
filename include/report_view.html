@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+Display the output of a report. Include a button for printing. Printing will only print the actual part you want to print
+This is a "fake" html file. What this means is that this html file, on its own, cannot submit the form.
+It must be included in a PHP file.
+
+Also I know intrusive javascript is ugly and hard to read, but its just a few lines ot hide the print button and the navbar.
+
+-->
+<html>
+    <head>
+        <title>Report View</title>
+		<link rel='stylesheet' href='css/report_view.css'>
+    </head>
+    <body>
+		<div id="print_div">
+        	<input id="print_button" type="button" value="Print Report"/>
+		</div>
+		<script type="text/javascript">
+        document.getElementById("print_button").onclick = function() 
+		{
+          document.getElementById("print_div").style.display = "none";
+		  document.getElementById("navbar").style.display = "none";
+		  window.print();
+		  document.getElementById("print_div").style.display = "block";
+		  document.getElementById("navbar").style.display = "block";
+        }
+		</script>
+    </body>
+</html>

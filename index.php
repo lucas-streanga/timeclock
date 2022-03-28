@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="table_style.css"><title>Index</title></head>
+<!DOCTYPE html><html><head><link rel="stylesheet" href="css/table_style.css"><title>Index</title></head>
 <?php
 
 error_reporting(-1); // display all faires
