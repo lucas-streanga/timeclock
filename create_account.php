@@ -19,8 +19,8 @@ if(!$conn)
 	die("Connection to database failed!");
 else
 {
-    $username = filter_input(INPUT_POST, 'username');
-    $id = filter_input(INPUT_POST, 'id');
+	$username = filter_input(INPUT_POST, 'username');
+	$id = filter_input(INPUT_POST, 'id');
 
 	if($id != "" && $username != "" && is_numeric($id))
 	{
@@ -60,7 +60,7 @@ else
 	if($id == "" || $username == "")
 		echo "<p> <font color=red size='4pt'>Username and ID must not be blank.</font> </p>";
 	if(is_numeric($id) == false)
-        echo "<p> <font color=red size='4pt' align='center'>ID must be an integer number.</font> </p>";
+		echo "<p> <font color=red size='4pt' align='center'>ID must be an integer number.</font> </p>";
 }
 
 }

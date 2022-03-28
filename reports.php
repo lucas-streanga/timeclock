@@ -17,7 +17,7 @@ else
 	//The report view html file includes a print button
 	//You can output whatever you want to the screen and it will get printed on the button press
 	include "include/report_view.html";
-    echo "This is where the report for the last week would go :) <br>";
+	echo "This is where the report for the last week would go :) <br>";
 	echo "Also the navbar is gone on this page, so we can get a pretty page to print";
 }
 
