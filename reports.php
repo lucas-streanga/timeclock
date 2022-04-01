@@ -3,6 +3,9 @@ include "include/db_connect.php";
 include "include/error_reporting.php";
 include "include/navbar.html";
 
+//Check login (use the check loging script!)
+include "include/check_login.php";
+
 //Check if the form was submitted, then run this code
 if(isset($_POST['submit'])){ 
 

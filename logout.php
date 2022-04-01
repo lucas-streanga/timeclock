@@ -6,9 +6,8 @@ include "include/navbar.html";
 //Check if the user is currently logged in, then display the logout button
 //Use session to check if they're logged in
 
-$logged_in = true;
-if($logged_in){ 
-
+//This script will check the login status
+include "include/check_login.php";
 
 //Establish connection to the DB
 $conn = db_connect("test");
@@ -30,12 +29,5 @@ else
 	}
 }
 
-}
-else
-{
-	//Not currently logged in!
-	echo "<br><br>";
-	echo "<p> <font color=red size='4pt'>You are not currently logged in. <a href='index.php'>Home</a> </font> </p>";
-}
 ?>
 
