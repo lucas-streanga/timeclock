@@ -159,7 +159,7 @@ else
 			print_clockout_form($rows);
 		}
 	}
-
+}
 
 ?>
 
