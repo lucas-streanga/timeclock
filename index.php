@@ -1,3 +1,4 @@
+<?php @session_start(); ?>
 <!DOCTYPE html><html><head><link rel="stylesheet" href="css/table_style.css"><title>Index</title></head>
 <?php
 
@@ -6,6 +7,7 @@ ini_set('display_errors', 1);  // ensure that faires will be seen
 ini_set('display_startup_errors', 1); // display faires that didn't born
 
 include "include/db_connect.php";
+include "include/check_login.php";
 include "include/report_gen.php";
 include "include/navbar.html";
 
@@ -23,6 +25,10 @@ function test_table($conn)
 
 echo "This is just a test page so far :)<br><br>";
 
+if(!check_login())
+{
+	echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\">";
+}
 
 $conn = db_connect("test");
 
@@ -35,7 +41,7 @@ if($conn)
 else
 {
 	echo 'Failure! Unable to connect to the database.';
-	die();
 }
 
+die();
 ?></html>
