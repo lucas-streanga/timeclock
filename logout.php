@@ -1,4 +1,4 @@
-<?php
+<?php @session_start();
 include "include/db_connect.php";
 include "include/error_reporting.php";
 include "include/navbar.html";
@@ -19,9 +19,24 @@ else
 {
 	if(isset($_POST['submit']))
 	{
-		//Unset the session variables here!
+
+		// Unset all of the session variables.
+		$_SESSION = array();
+		
+		// If it's desired to kill the session, also delete the session cookie.
+		// Note: This will destroy the session, and not just the session data!
+		if (ini_get("session.use_cookies")) {
+		    $params = session_get_cookie_params();
+		    setcookie(session_name(), '', time() - 42000,
+		        $params["path"], $params["domain"],
+		        $params["secure"], $params["httponly"]
+		    );
+		}
+		
+		// Finally, destroy the session.
+		session_destroy();
 		echo "<br><br>";
-		echo '<font size = "4pt">You are now logged out. <a href="index.php">Home</a> </font>';
+		echo '<font size = "4pt">You are now logged out. You may now close this browser window. </font>';
 	}
 	else
 	{

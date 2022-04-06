@@ -8,6 +8,7 @@ include "include/navbar.html";
 
 //Check if the user is logged in (can't clock in and out if you're not logged in!)
 include "include/check_login.php";
+check_login_or_redirect();
 
 echo "<html><head><title>Timeclock</title><link rel='stylesheet' href='css/timeclock.css'></head><html>";
 
@@ -159,7 +160,7 @@ else
 			print_clockout_form($rows);
 		}
 	}
-
 }
+
 ?>
 
