@@ -11,4 +11,12 @@
 function check_login(){
 	return @isset($_SESSION['userid']);
 }
+
+function check_login_or_redirect()
+{
+	if(!check_login())
+	{
+    	echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\">";
+	}
+}
 ?>

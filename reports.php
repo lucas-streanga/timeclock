@@ -5,6 +5,7 @@ include "include/navbar.html";
 
 //Check login (use the check loging script!)
 include "include/check_login.php";
+check_login_or_redirect();
 
 //Check if the form was submitted, then run this code
 if(isset($_POST['submit'])){ 

@@ -22,13 +22,9 @@ function test_table($conn)
 	echo html_table($rows);
 }
 
+check_login_or_redirect();
 
 echo "This is just a test page so far :)<br><br>";
-
-if(!check_login())
-{
-	echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\">";
-}
 
 $conn = db_connect("test");
 

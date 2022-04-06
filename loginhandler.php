@@ -1,8 +1,10 @@
 <?php @session_start();
 include "include/db_connect.php";
+include "include/error_reporting.php";
 
 //Establish connection to the DB
 $conn = db_connect("test");
+
 
 // Check the connection
 if(!$conn)
@@ -17,11 +19,17 @@ else
 	{
 		//We need to use parameterized arguments for safety
 		//Check and see if an account with the ID already exists
-    	$query = $conn->prepare("SELECT * FROM account WHERE user_id=:userid");
+    	$query = $conn->prepare("SELECT * FROM account WHERE id=:userid");
 		$query->bindParam(':userid', $id);
-		$query->execute();
-		$rows = $query->fetchall();
-
+		//We should try to catch this excpetion, bc the query id could be out of range
+		try { $query->execute(); $rows = $query->fetchall(); }
+		catch(Throwable $e)
+		{
+			//Dont log them in!
+			if (!@isset($_SESSION['login_fail']))
+                $_SESSION['login_fail'] = true;
+            echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\">";
+		}
     	if(count($rows) > 0)
     	{
 			//account exists, set session variables for later use
@@ -37,10 +45,8 @@ else
 		{
 			//Account doesn't exist, set login fail session variable, and redirect back to login form
         	if (!@isset($_SESSION['login_fail']))
-			{
 				$_SESSION['login_fail'] = true;
-				echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\">";
-			}
+			echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\">";
 		}
 	}
 }
