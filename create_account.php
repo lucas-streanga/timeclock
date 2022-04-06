@@ -1,9 +1,12 @@
 <?php
 include "include/db_connect.php";
 include "include/error_reporting.php";
+include "include/check_login.php";
 
 //Read out the html form
-include "include/navbar.html";
+if(check_login())
+	include "include/navbar.html";
+
 include "include/create_account.html";
 
 //Check if the form was submitted, then run this code
@@ -53,7 +56,7 @@ else
 			$id = $rows[0]["id"];
 			
 			if($success)
-				echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID '. $id. '.'. "</font> </p>";
+				echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID '. $id. '.'. " <a href='login.php'>Login</a></font> </p>";
     	}
 		else
 		{
