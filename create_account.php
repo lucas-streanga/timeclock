@@ -56,7 +56,7 @@ else
 			$id = $rows[0]["id"];
 			
 			if($success)
-				echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID '. $id. '.'. " <a href='login.php'>Login</a></font> </p>";
+				echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID <b>'. $id. '</b>.'. " <a href='login.php'>Login</a></font> </p>";
     	}
 		else
 		{
