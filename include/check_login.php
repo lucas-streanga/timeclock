@@ -16,7 +16,10 @@ function check_login_or_redirect()
 {
 	if(!check_login())
 	{
-    	echo "<meta http-equiv=\"refresh\" content=\"0;url=login.php\">";
+    	echo "<meta http-equiv='refresh' content='0;url=login.php'>";
+		//The exit here is actually maybe "necessary" because otherwise this redirect would still 
+		//have the original PHP script running, although it can't be seen. 
+		exit;
 	}
 }
 ?>
