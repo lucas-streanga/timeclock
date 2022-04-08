@@ -12,6 +12,8 @@ $userid = $_SESSION["userid"];
 
 $conn = db_connect("test");
 
+delete_task_form($conn, $userid);
+
 if(isset($_POST['submit'])){
 
 if(!$conn)
@@ -28,7 +30,7 @@ else
         $query -> bindParam(":userid", $userid);
         $query -> execute();
         $rows = $query -> fetchall(PDO::FETCH_ASSOC);
-		
+
         if(count($rows) == 0)
         {
             $query = $conn->prepare("INSERT INTO task(name, userid) VALUES (:taskName, :userid);");
@@ -66,3 +68,4 @@ else
 }
 
 }
+?>
