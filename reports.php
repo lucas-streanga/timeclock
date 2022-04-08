@@ -24,8 +24,32 @@ else
 	
 	if(isset($_POST['simple_report_submit']))
 	{
+		if (!$result) {
+		    echo "Error executing query: " . mysql_error();
+		    exit;
+		}
+
+		if (mysql_num_rows($result) == 0) {
+		    echo "Empty result set";
+		    exit;
+		}
+		$sql = "SELECT a.username AS User, b.task_name AS Task, SUM(b.clockout-b.clock_in) AS Time
+			FROM   account a
+			JOIN   working_period b ON a.id = b.user_id
+			WHERE  b.clock_in BETWEEN CURDATE()-INTERVAL 1 WEEK AND CURDATE()
+			AND    User IS :userid
+			GROUP BY Task;"
+
+		$result = mysql_query($sql);
+		
 		echo "This is where the report for the last week would go :) <br>";
 		echo "Also the navbar is gone on this page, so we can get a pretty page to print";
+		while ($row = mysql_fetch_assoc($result)) {
+    			echo $row["User"];
+    			echo $row["Task"];
+   		        echo $row["Time"];
+		}
+		mysql_free_result($result);
 		//We can run queries and generate the reports here, output them to html easily
 		//The report_gen.php file will include functions for generating the reports.
 		//Right now, only html_table() is included, to generate an html table from a db select.
