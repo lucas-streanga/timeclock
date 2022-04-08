@@ -37,7 +37,7 @@ else
 			FROM   account a
 			JOIN   working_period b ON a.id = b.user_id
 			WHERE  b.clock_in BETWEEN CURDATE()-INTERVAL 1 WEEK AND CURDATE()
-			GROUP BY Task;";
+			GROUP BY Task";
 
 		$result = mysql_query($sql);
 		
