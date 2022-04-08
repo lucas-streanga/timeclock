@@ -34,7 +34,7 @@ function print_clockin_form($conn, $userid)
 			echo '<option>'. $value. '</option>';
 
 	echo '</select>';
-	echo "<br>Or,  <a href='index.php'>create a new task</a>";
+	echo "<br>Or,  <a href='create_task.php'>create a new task</a>";
 
 	echo '
         <div align="center">
