@@ -20,7 +20,7 @@ function print_delete_task_form($conn, $userid)
     $rows = $query->fetchall(PDO::FETCH_ASSOC);
 	echo '<br><br>
 		<label for="task_select">Choose a task:</label>
-		<select name="task_select" id="task_select">
+		<select style="width: 25%"name="task_select" id="task_select">
 	';
 
 	foreach($rows as &$individual_row)
