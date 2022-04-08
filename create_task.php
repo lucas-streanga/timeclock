@@ -5,6 +5,7 @@ include "include/report_gen.php";
 include "include/navbar.html";
 include "include/create_task.html";
 include "include/check_login.php";
+include "include/delete_task.php";
 
 check_login_or_redirect();
 $userid = $_SESSION["userid"];
