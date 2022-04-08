@@ -11,7 +11,7 @@ check_login_or_redirect();
 if($_SERVER["REQUEST_METHOD"] == "POST"){ 
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock");
 
 // Check the connection
 if(!$conn)
@@ -33,10 +33,11 @@ else
 		    echo "Empty result set";
 		    exit;
 		}
-		$sql = "SELECT a.username AS User, b.task_name AS Task, SUM(b.clockout-b.clock_in) AS Time
-			FROM   account a
-			JOIN   working_period b ON a.id = b.user_id
-			WHERE  b.clock_in BETWEEN CURDATE()-INTERVAL 1 WEEK AND CURDATE()
+		$sql = "SELECT c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
+			FROM   TC_User a
+			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
+            JOIN   TC_User c ON a.Employee_Id = c.Employee_Id
+			WHERE  b.Clock_out BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
 			GROUP BY Task";
 
 		$result = mysql_query($sql);
@@ -44,6 +45,7 @@ else
 		echo "This is where the report for the last week would go :) <br>";
 		echo "Also the navbar is gone on this page, so we can get a pretty page to print";
 		while ($row = mysql_fetch_assoc($result)) {
+				echo $row["Username"];
     			echo $row["User"];
     			echo $row["Task"];
    		        echo $row["Time"];
