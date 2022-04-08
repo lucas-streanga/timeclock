@@ -7,10 +7,11 @@ include_once "include/error_reporting.php";
 
 function print_delete_task_form($conn, $userid)
 {
+	echo "<br>";
 	//Form!
 	echo '
 	<form method="post" action="";><fieldset>
-                <legend align="center" style="font-size:24px">Delete a Task</legend>';
+                <legend align="center" style="font-size:24px">Delete Task</legend>';
 
 	//Use a query to get all the task names for this user...
     $query = $conn->prepare("SELECT name FROM task WHERE userid=:id");
@@ -46,19 +47,24 @@ function delete_task_form($conn, $userid)
     $task_name = filter_input(INPUT_POST, 'task_select');
     if($task_name == "")
     {
-      echo "<p> <font color=red size='4pt'>You must select a text to delete.</font></p>";
+      echo "<p> <font color=red size='4pt'>You must select a task to delete.</font></p>";
     }
     else
     {
+	  $success = true;
       //Delete the task. We already know it exists bc of the prev function...
       $query = $conn->prepare("DELETE FROM task WHERE name=:task_name AND userid=:userid;");
       $query->bindParam(":task_name", $task_name);
       $query->bindParam(":userid", $userid);
-      try {$query->execute()}
+      try { $query->execute(); }
       catch(Throwable $e)
       {
         echo "<p> <font color=red size='4pt'>Unable to delete task.</font></p>";
+		$success = false;
       }
+	  if($success)
+	  		echo "<p> <font color=green size='4pt'>". 'Success! Deleted task: "'. $task_name. '".';
+
     }
   }
 }
