@@ -2,6 +2,7 @@
 include "include/db_connect.php";
 include "include/error_reporting.php";
 include "include/navbar.html";
+include "include/report_gen.php";
 
 //Check login (use the check loging script!)
 include "include/check_login.php";
