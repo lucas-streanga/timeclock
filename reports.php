@@ -12,7 +12,7 @@ check_login_or_redirect();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock");
 
 $userid = $_SESSION["userid"];
 
@@ -30,7 +30,6 @@ else
 		$success = true;
 		$rows = array();
 
-		/*
 		$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
@@ -38,8 +37,6 @@ else
 			WHERE  b.Clock_out BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
 			AND a.Employee_Id = :userid
 			GROUP BY Task;";
-		*/
-		$sql = "SELECT task_name as Task, DATEDIFF(MINUTE, clock_in, clockout) AS Time from working_period WHERE user_id=:userid";
 
 		$query = $conn->prepare($sql);
 		$query->bindParam(':userid', $userid);
@@ -66,10 +63,7 @@ else
 		    	echo "Empty result set";
 			}
 			else if($success)
-			{
 				echo html_table($rows);
-				echo html_table(total_per_task($rows));
-			}
 		}
 
 		echo "This is where the report for the last week would go :) <br>";
