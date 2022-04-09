@@ -38,7 +38,6 @@ else
 			AND a.Employee_Id = :userid
 			GROUP BY Task";
 
-		//$sql = "SELECT * from working_period WHERE user_id=:userid";
 		$query = $conn->prepare($sql);
 		$query->bindParam(':userid', $userid);
 		try
@@ -53,19 +52,15 @@ else
 		catch(Throwable $e)
 		{
 			echo "<p> <font color=red size='4pt'>Unable to fetch report: </font>". "<br>". $e->getMessage(). "</p>";
-			exit;
 			$success = false;
 		}
-		echo "rows! : ";
-		print_r($rows);
 
 		//count will give the correct eval
-		if ($rows != null)
+		if ($rows)
 		{
 			if(count($rows) == 0)
 			{
 		    	echo "Empty result set";
-		    	exit;
 			}
 			else if($success)
 				echo html_table($rows);
