@@ -6,7 +6,7 @@ function html_table($rows)
 {
 	$ret = "";
 	$table_headers = $rows[0];
-	$ret = $ret . "<table style =\"width:100%;\">";
+	//$ret = $ret . "<table style =\"width:100%;\">";
 	foreach(array_keys($table_headers) as &$column_name)
 		$ret = $ret . "<th style = \"text-align: left\">" . $column_name . "</th>";
 
