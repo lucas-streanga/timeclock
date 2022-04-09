@@ -6,7 +6,7 @@ function html_table($rows)
 {
 	$ret = "";
 	$table_headers = $rows[0];
-	$ret = $ret . "<table>";
+	$ret = $ret . "<table style='font-size: 32px;'>";
 	foreach(array_keys($table_headers) as &$column_name)
 		$ret = $ret . "<th>" . $column_name . "</th>";
 
@@ -21,15 +21,6 @@ function html_table($rows)
 	$ret = $ret . "</table>";
 
 	return $ret;
-}
-
-function set_style()
-{
-	echo "
-		<head>
-    <title>Report View</title>
-    <link rel='stylesheet' href='css/table_style.css'>
-    </head>";
 }
 
 function last_week_report($conn, $userid)
