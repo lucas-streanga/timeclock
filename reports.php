@@ -29,8 +29,7 @@ else
 	{
 		$success = true;
 		$rows = array();
-		echo ":)";
-
+	
 		/*$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
@@ -94,7 +93,7 @@ else
 		$query->execute();
 		$rows = $query->fetchall(PDO::FETCH_ASSOC);
 		//Uh oh! Nothing to show...
-		if(count($rows) || !rows)
+		if(count($rows) == 0 || !$rows)
 		{
 			return null;
 		}
