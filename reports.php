@@ -29,7 +29,7 @@ else
 	{
 		$success = true;
 		$rows = array();
-	
+
 		/*$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
@@ -65,7 +65,7 @@ else
 		total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
 		as "Total (HH:MM:SS)"
 	 	FROM working_period
-	 	WHERE user_id=3
+	 	WHERE user_id=:userid
 	 	GROUP BY task_name
 		ORDER BY DAY(clock_in);';
 
