@@ -38,7 +38,7 @@ function total_per_task($rows)
 				$exists = false;
 				//Check if the task already exists in the output...
 				foreach($ret as &$individual_ret)
-					if(array_key_exists($column_name, $individual_ret))
+					if(in_array($task_name, $individual_ret))
 						$exists = true;
 
 				if(!$exists)
