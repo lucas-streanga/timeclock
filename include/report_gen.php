@@ -34,7 +34,7 @@ function total_per_task($rows)
 		{
 			if($column_name = "Task")
 			{
-				$task_name = $individual_row[&$column_name];
+				$task_name = $individual_row[$column_name];
 				$exists = false;
 				//Check if the task already exists in the output...
 				foreach($ret as &$individual_ret)
