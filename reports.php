@@ -63,7 +63,7 @@ else
 		    	echo "Empty result set";
 		    	exit;
 			}
-			else if($success)
+			//else if($success)
 				//echo html_table($rows);
 		}
 
