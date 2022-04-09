@@ -39,7 +39,7 @@ else
 			AND a.Employee_Id = :userid
 			GROUP BY Task;";
 		*/
-		$sql = "SELECT task_name as Task, clockout-clock_in AS Time from working_period WHERE user_id=:userid";
+		$sql = "SELECT task_name as Task, DATEDIFF(MINUTE, clock_in, clockout) AS Time from working_period WHERE user_id=:userid";
 
 		$query = $conn->prepare($sql);
 		$query->bindParam(':userid', $userid);
