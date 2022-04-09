@@ -55,11 +55,12 @@ else
 		}
 
 		//count will give the correct eval
-		if ($rows && count($rows) == 0)
-		{
-		    echo "Empty result set";
-		    exit;
-		}
+		if ($rows)
+			if(count($rows) == 0)
+			{
+		    	echo "Empty result set";
+		    	exit;
+				}
 
 		//We have a function for a table.
 		if($success && $rows)
