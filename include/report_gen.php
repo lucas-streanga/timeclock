@@ -6,7 +6,7 @@ function html_table($rows)
 {
 	$ret = "";
 	$table_headers = $rows[0];
-	$ret = $ret . "<table style='font-size: 13px;'>";
+	$ret = $ret . "<table>";
 	foreach(array_keys($table_headers) as &$column_name)
 		$ret = $ret . "<th>" . $column_name . "</th>";
 
