@@ -25,11 +25,11 @@ function html_table($rows)
 
 function set_style()
 {
-	echo '
+	echo "
 		<head>
     <title>Report View</title>
     <link rel='stylesheet' href='css/table_style.css'>
-    </head>';
+    </head>";
 }
 
 function last_week_report($conn, $userid)
