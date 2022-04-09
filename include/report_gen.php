@@ -81,7 +81,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= html_table($rows) . "<br";
+		$html_ret .= html_table($rows) . "<br>";
 
 	$query = $conn->prepare($totals_per_day_sql);
 	$query->bindParam(':userid', $userid);
