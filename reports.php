@@ -36,7 +36,7 @@ else
             JOIN   TC_User c ON a.Employee_Id = c.Employee_Id
 			WHERE  b.Clock_out BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
 			AND a.Employee_Id = :userid
-			GROUP BY Task";
+			GROUP BY Task;";
 
 		$query = $conn->prepare($sql);
 		$query->bindParam(':userid', $userid);
@@ -63,7 +63,10 @@ else
 		    	echo "Empty result set";
 			}
 			else if($success)
+			{
 				echo html_table($rows);
+				echo html_table(total_per_task($rows));
+			}
 		}
 
 		echo "This is where the report for the last week would go :) <br>";
