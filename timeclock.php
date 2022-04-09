@@ -1,4 +1,4 @@
-<?php
+<?php @session_start();
 include "include/db_connect.php";
 include "include/error_reporting.php";
 include "include/report_gen.php";
@@ -9,6 +9,7 @@ include "include/navbar.html";
 //Check if the user is logged in (can't clock in and out if you're not logged in!)
 include "include/check_login.php";
 check_login_or_redirect();
+$userid = $_SESSION["userid"];
 
 echo "<html><head><title>Timeclock</title><link rel='stylesheet' href='css/timeclock.css'></head><html>";
 
@@ -34,7 +35,7 @@ function print_clockin_form($conn, $userid)
 			echo '<option>'. $value. '</option>';
 
 	echo '</select>';
-	echo "<br>Or,  <a href='index.php'>create a new task</a>";
+	echo "<br>Or,  <a href='create_task.php'>create a new task</a>";
 
 	echo '
         <div align="center">
@@ -77,11 +78,16 @@ function query_working_period($conn, $userid)
 function clockin_routine($conn, $userid)
 {
 	$task = filter_input(INPUT_POST, 'task_select');
+	if($task == "")
+	{
+		echo "<p> <font color=red size='4pt'>You must create at least one task to clock in. <a href='timeclock.php'>Back</a></font></p>";
+		die();
+	}
 	//Unfortunately, we need to check the clock-in status again...
 	$rows = query_working_period($conn, $userid);
 	if(!(count($rows) == 0))
 	{
-    	echo "<p> <font color=red size='4pt'>Unable to clock in. Are you already clocked in?</font></p>";
+    	echo "<p> <font color=red size='4pt'>Unable to clock in. Are you already clocked in? <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
 	$query = $conn->prepare("INSERT INTO working_period (clock_in, clockout, id, task_name, user_id) VALUES (NOW(), NULL, NULL, :task, :id);");
@@ -90,7 +96,7 @@ function clockin_routine($conn, $userid)
 	try{$query->execute();}
 	catch(Throwable $e)
 	{
-		echo "<p> <font color=red size='4pt'>Unable to clock in.</font></p>";
+		echo "<p> <font color=red size='4pt'>Unable to clock in. <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
@@ -102,7 +108,7 @@ function clockout_routine($conn, $userid)
 	$rows = query_working_period($conn, $userid);
 	if((count($rows) == 0))
 	{
-		echo "<p> <font color=red size='4pt'>Unable to clock out. Are you already clocked out? </font></p>";
+		echo "<p> <font color=red size='4pt'>Unable to clock out. Are you already clocked out? <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
 	$query = $conn->prepare("UPDATE working_period SET clockout=NOW() WHERE user_id=:id;");
@@ -110,7 +116,7 @@ function clockout_routine($conn, $userid)
 	try{$query->execute();}
 	catch(Throwable $e)
 	{
-		echo "<p> <font color=red size='4pt'>Unable to clock out.</font></p>";
+		echo "<p> <font color=red size='4pt'>Unable to clock out. <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
@@ -128,8 +134,7 @@ if(!$conn)
 else
 {
 	//First we need to check if the user is clocked in or clocked out...
-	//We will use a make believe userid 1, as we don't have sessions set up yet
-	$userid = 1; 
+	//Userid is grabbed from the session at the start of this script
 	$rows = query_working_period($conn, $userid);
 	$clocked_in = !(count($rows) == 0);
 
