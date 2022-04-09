@@ -28,7 +28,7 @@ function total_per_task($rows)
 	//You could run a SQL query for this, but this is easier for me.
 
 	$ret = array(array());
-	int i = 0;
+	$i= 0;
 	foreach($rows as &$individual_row)
 		foreach(array_keys($individual_row) as &$column_name)
 		{
@@ -43,8 +43,8 @@ function total_per_task($rows)
 
 				if(!$exists)
 				{
-					$ret[i] = array("Task" => $individual_row[$column_name], "Total" => ".");
-					i++;
+					$ret[$i] = array("Task" => $individual_row[$column_name], "Total" => ".");
+					$i++;
 				}
 			}
 		}
