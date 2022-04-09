@@ -58,15 +58,15 @@ else
 		print_r($rows);
 
 		//count will give the correct eval
-		if ($rows)
+		if ($rows != null)
 		{
 			if(count($rows) == 0)
 			{
 		    	echo "Empty result set";
 		    	exit;
 			}
-			//else if($success)
-				//echo html_table($rows);
+			else if($success)
+				echo html_table($rows);
 		}
 
 		echo "This is where the report for the last week would go :) <br>";
