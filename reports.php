@@ -55,7 +55,7 @@ else
 		}
 
 		//count will give the correct eval
-		if (count($rows) == 0)
+		if ($rows && count($rows) == 0)
 		{
 		    echo "Empty result set";
 		    exit;
