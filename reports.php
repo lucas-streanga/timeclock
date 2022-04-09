@@ -56,6 +56,7 @@ else
 
 		//count will give the correct eval
 		if ($rows)
+		{
 			if(count($rows) == 0)
 			{
 		    	echo "Empty result set";
@@ -63,6 +64,7 @@ else
 			}
 			else if($success)
 				echo html_table($rows);
+		}
 
 		echo "This is where the report for the last week would go :) <br>";
 		echo "Also the navbar is gone on this page, so we can get a pretty page to print";
