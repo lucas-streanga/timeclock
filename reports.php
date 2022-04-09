@@ -27,6 +27,7 @@ else
 	if(isset($_POST['simple_report_submit']))
 	{
 		$success = true;
+		$rows = null;
 		$sql = "SELECT c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
@@ -41,7 +42,7 @@ else
 		{
 			$query->execute();
 			//Use PDO:FETCH_ASSOC... mysql_fetch_assoc isn't supported...
-			$rows = $query->fetchall(PDO:FETCH_ASSOC);
+			$rows = $query->fetch(PDO::FETCH_ASSOC);
 			//PDO is exception based - the rows will be empty if nothing is there
 			//If the query fails, you will get an exception! Not an empty result
 		}
