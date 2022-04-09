@@ -30,6 +30,19 @@ else
 		$success = true;
 		$rows = array();
 
+		/*Time clock totals by tast (HH:MM:SS)
+		This took forever...
+		SELECT task_name,
+		CONCAT(LPAD(FLOOR(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in)))/3600), 2, 0), ":",
+		LPAD(FLOOR(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in)))%3600 /60), 2, 0), ":",
+		LPAD(FLOOR(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in)))%60%60), 2, 0))
+		as "HH:MM:SS"
+
+ 	FROM working_period
+ 	WHERE user_id=3
+ 	GROUP BY task_name
+	*/
+
 		$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
