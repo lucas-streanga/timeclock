@@ -62,7 +62,7 @@ else
 		}
 
 		//We have a function for a table.
-		if($success)
+		if($success && $rows)
 			echo html_table($rows);
 
 		echo "This is where the report for the last week would go :) <br>";
