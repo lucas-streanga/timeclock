@@ -99,8 +99,6 @@ function last_week_report($conn, $userid)
 	if($rows && count($rows) != 0)
 		$html_ret .= html_table($rows);
 
-	print $html_ret;
-
 	return $html_ret;
 }
 
