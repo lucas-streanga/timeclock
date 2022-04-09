@@ -28,7 +28,7 @@ else
 	if(isset($_POST['simple_report_submit']))
 	{
 		$success = true;
-		$rows = null;
+		$rows = array();
 		$sql = "SELECT c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
