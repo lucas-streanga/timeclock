@@ -1,4 +1,5 @@
 <?php
+include "error_reporting.php";
 
 //Simple function to generate an HTML table from a SQL Query Result
 function html_table($rows)
@@ -97,6 +98,8 @@ function last_week_report($conn, $userid)
 		//Uh oh! Nothing to show...
 		if($rows && count($rows) != 0)
 			$html_ret .= html_table($rows);
+
+		print $html_ret;
 
 		return $html_ret;
 }
