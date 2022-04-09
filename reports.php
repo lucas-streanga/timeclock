@@ -54,7 +54,8 @@ else
 			exit;
 			$success = false;
 		}
-		echo "rows! : ". $rows;
+		echo "rows! : ";
+		echo $rows;
 
 		//count will give the correct eval
 		if ($rows)
