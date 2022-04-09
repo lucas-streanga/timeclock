@@ -49,7 +49,7 @@ else
 			//PDO is exception based - the rows will be empty if nothing is there
 			//If the query fails, you will get an exception! Not an empty result
 		}*/
-		
+
 		$html = null;
 		try
 		{
@@ -65,7 +65,7 @@ else
 		//count will give the correct eval
 		if ($html)
 		{
-			if(count($html) == 0)
+			if($html == "")
 			{
 		    	echo "<p> <font color=red size='4pt'>Empty result set...</p>";
 			}
