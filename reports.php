@@ -60,11 +60,9 @@ else
 			{
 		    	echo "Empty result set";
 		    	exit;
-				}
-
-		//We have a function for a table.
-		if($success && $rows)
-			echo html_table($rows);
+			}
+			else if($succes)
+				echo html_table($rows);
 
 		echo "This is where the report for the last week would go :) <br>";
 		echo "Also the navbar is gone on this page, so we can get a pretty page to print";
