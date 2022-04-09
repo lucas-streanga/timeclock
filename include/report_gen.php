@@ -6,15 +6,15 @@ function html_table($rows)
 {
 	$ret = "";
 	$table_headers = $rows[0];
-	$ret = $ret . "<table style='font-size: 32px;'>";
+	$ret = $ret . "<table style='size:4pt;'>";
 	foreach(array_keys($table_headers) as &$column_name)
-		$ret = $ret . "<th>" . $column_name . "</th>";
+		$ret = $ret . "<th style='padding:4px'>" . $column_name . "</th>";
 
 	foreach($rows as &$individual_row)
 	{
 		$ret = $ret . "<tr>";
 		foreach($individual_row as &$value)
-			$ret = $ret . "<td>" . $value . "</td>";
+			$ret = $ret . "<td style='padding:4px'>" . $value . "</td>";
 		$ret = $ret . "</tr>";
 	}
 
@@ -73,7 +73,7 @@ function last_week_report($conn, $userid)
 	{
 		return null;
 	}
-	$html_ret .= "Hours by Day and Task <br>". html_table($rows) . "<br>";
+	$html_ret .= "<font font-size='4px'><b>Hours by Day and Task</b>". html_table($rows);
 
 	$query = $conn->prepare($totals_per_task_sql);
 	$query->bindParam(':userid', $userid);
@@ -81,7 +81,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= "Totals by Task <br>". html_table($rows) . "<br>";
+		$html_ret .= "<br><font font-size='4px'><b>Totals by Task</b>". html_table($rows);
 
 	$query = $conn->prepare($totals_per_day_sql);
 	$query->bindParam(':userid', $userid);
@@ -89,7 +89,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= "Totals by Day <br>". html_table($rows) . "<br>";
+		$html_ret .= "<br><font font-size='4px'><b>Totals by Day</b>". html_table($rows);
 
 	$query = $conn->prepare($report_total_sql);
 	$query->bindParam(':userid', $userid);
@@ -97,7 +97,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= "Overall Total <br>". html_table($rows);
+		$html_ret .= "<br><font font-size='4px'><b>Overall Total</b>". html_table($rows);
 
 	return $html_ret;
 }
