@@ -55,7 +55,7 @@ else
 			$success = false;
 		}
 		echo "rows! : ";
-		echo $rows;
+		print_r($rows);
 
 		//count will give the correct eval
 		if ($rows)
