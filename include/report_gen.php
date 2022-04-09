@@ -4,7 +4,6 @@ include "error_reporting.php";
 //Simple function to generate an HTML table from a SQL Query Result
 function html_table($rows)
 {
-	print_r($rows);
 	$ret = "";
 	$table_headers = $rows[0];
 	$ret = $ret . "<table>";
@@ -90,7 +89,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= html_table($rows) . "<br";
+		$html_ret .= html_table($rows) . "<br>";
 
 	$query = $conn->prepare($report_total_sql);
 	$query->bindParam(':userid', $userid);
