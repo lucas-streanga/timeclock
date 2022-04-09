@@ -45,7 +45,7 @@ else
 		{
 			$query->execute();
 			//Use PDO:FETCH_ASSOC... mysql_fetch_assoc isn't supported...
-			$rows = $query->fetch(PDO::FETCH_ASSOC);
+			$rows = $query->fetchall(PDO::FETCH_ASSOC);
 			//PDO is exception based - the rows will be empty if nothing is there
 			//If the query fails, you will get an exception! Not an empty result
 		}
