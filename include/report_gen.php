@@ -8,13 +8,13 @@ function html_table($rows)
 	$table_headers = $rows[0];
 	$ret = $ret . "<table>";
 	foreach(array_keys($table_headers) as &$column_name)
-		$ret = $ret . "<th style = \"text-align: left\">" . $column_name . "</th>";
+		$ret = $ret . "<th>" . $column_name . "</th>";
 
 	foreach($rows as &$individual_row)
 	{
 		$ret = $ret . "<tr>";
 		foreach($individual_row as &$value)
-			$ret = $ret . "<td style = \"\">" . $value . "</td>";
+			$ret = $ret . "<td>" . $value . "</td>";
 		$ret = $ret . "</tr>";
 	}
 
