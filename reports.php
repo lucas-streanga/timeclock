@@ -35,7 +35,7 @@ else
 			AND a.Employee_Id = :userid
 			GROUP BY Task";
 
-		$query = $conn->prepare(sql);
+		$query = $conn->prepare($sql);
 		$query->bindParam(':userid', $userid);
 		try
 		{
