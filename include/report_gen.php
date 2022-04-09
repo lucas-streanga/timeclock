@@ -4,6 +4,7 @@ include "error_reporting.php";
 //Simple function to generate an HTML table from a SQL Query Result
 function html_table($rows)
 {
+	print_r($rows);
 	$ret = "";
 	$table_headers = $rows[0];
 	$ret = $ret . "<table>";
