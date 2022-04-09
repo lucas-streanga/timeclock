@@ -73,7 +73,7 @@ function last_week_report($conn, $userid)
 	{
 		return null;
 	}
-	$html_ret .= html_table($rows) . "<br>";
+	$html_ret .= "Hours by Day and Task <br>". html_table($rows) . "<br>";
 
 	$query = $conn->prepare($totals_per_task_sql);
 	$query->bindParam(':userid', $userid);
@@ -81,7 +81,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= html_table($rows) . "<br>";
+		$html_ret .= "Totals by Task <br>". html_table($rows) . "<br>";
 
 	$query = $conn->prepare($totals_per_day_sql);
 	$query->bindParam(':userid', $userid);
@@ -89,7 +89,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= html_table($rows) . "<br>";
+		$html_ret .= "Totals by Day <br>". html_table($rows) . "<br>";
 
 	$query = $conn->prepare($report_total_sql);
 	$query->bindParam(':userid', $userid);
@@ -97,7 +97,7 @@ function last_week_report($conn, $userid)
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
-		$html_ret .= html_table($rows);
+		$html_ret .= "Overall Total <br>". html_table($rows);
 
 	return $html_ret;
 }
