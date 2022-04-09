@@ -125,7 +125,7 @@ ORDER BY DAY(clock_in)
 		    	echo "<p> <font color=red size='4pt'>Empty result set...</p>";
 			}
 			else if($success)
-				echo html_table($rows);
+				echo $html;
 		}
 
 		echo "This is where the report for the last week would go :) <br>";
