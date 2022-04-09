@@ -41,6 +41,11 @@ else
  	FROM working_period
  	WHERE user_id=3
  	GROUP BY task_name
+
+
+
+	If you want the total total, remove the group by.
+	I put a lot of this in a routine, see total_seconds_to_time in phpmyadmin
 	*/
 
 		$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
