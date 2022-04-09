@@ -72,9 +72,6 @@ else
 			else if($success)
 				echo $html;
 		}
-
-		echo "This is where the report for the last week would go :) <br>";
-		echo "Also the navbar is gone on this page, so we can get a pretty page to print";
 		//We can run queries and generate the reports here, output them to html easily
 		//The report_gen.php file will include functions for generating the reports.
 		//Right now, only html_table() is included, to generate an html table from a db select.
