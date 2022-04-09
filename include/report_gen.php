@@ -23,6 +23,15 @@ function html_table($rows)
 	return $ret;
 }
 
+function set_style()
+{
+	echo '
+		<head>
+    <title>Report View</title>
+    <link rel='stylesheet' href='css/table_style.css'>
+    </head>';
+}
+
 function last_week_report($conn, $userid)
 {
 	$overall_sql = '

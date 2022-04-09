@@ -10,6 +10,7 @@ check_login_or_redirect();
 
 //Check if any form was submitted, then run this code
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+	set_style();
 
 //Establish connection to the DB
 $conn = db_connect("test");
