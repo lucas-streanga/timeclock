@@ -12,7 +12,7 @@ check_login_or_redirect();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 //Establish connection to the DB
-$conn = db_connect("timeclock");
+$conn = db_connect("test");
 
 $userid = $_SESSION["userid"];
 
@@ -46,17 +46,56 @@ else
 
 	If you want the total total, remove the group by.
 	I put a lot of this in a routine, see total_seconds_to_time in phpmyadmin
+	SELECT task_name,
+		total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
+		as "HH:MM:SS"
+
+ 	FROM working_period
+ 	WHERE user_id=3
+ 	GROUP BY task_name
 	*/
 
-		$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
+		/*$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
             JOIN   TC_User c ON a.Employee_Id = c.Employee_Id
 			WHERE  b.Clock_out BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
 			AND a.Employee_Id = :userid
 			GROUP BY Task;";
+		*/
 
-		$query = $conn->prepare($sql);
+		/* Get the clockin/out time for the last week
+SELECT  DAYNAME(clock_in) as Day,
+task_name as Task,
+clock_in as 'In',
+clockout as 'Out',
+TIMEDIFF(clockout, clock_in) as Time
+FROM working_period
+WHERE user_id=1 AND clockout BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
+GROUP BY DAYNAME(clock_in)
+ORDER BY DAY(clock_in)
+		*/
+		/*Totals per day...
+		SELECT DAYNAME(clock_in) as Day,
+		total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
+		as "Total (HH:MM:SS)"
+
+ 	FROM working_period
+ 	WHERE user_id=3 AND clockout BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
+ 	GROUP BY DAYNAME(clock_in)
+    ORDER BY DAY(clock_in);
+
+		Report Total (whole week)
+		SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
+		as "Report Total (HH:MM:SS)"
+
+ 	FROM working_period
+ 	WHERE user_id=3
+
+
+		*/
+
+		/*$query = $conn->prepare($sql);
 		$query->bindParam(':userid', $userid);
 		try
 		{
@@ -65,6 +104,11 @@ else
 			$rows = $query->fetchall(PDO::FETCH_ASSOC);
 			//PDO is exception based - the rows will be empty if nothing is there
 			//If the query fails, you will get an exception! Not an empty result
+		}*/
+		$html = null;
+		try
+		{
+			$html = last_week_report($conn, $userid);
 		}
 		//Throwable will catch everything, Exception will miss somethings...
 		catch(Throwable $e)
@@ -74,11 +118,11 @@ else
 		}
 
 		//count will give the correct eval
-		if ($rows)
+		if ($html)
 		{
-			if(count($rows) == 0)
+			if(count($html) == 0)
 			{
-		    	echo "Empty result set";
+		    	echo "<p> <font color=red size='4pt'>Empty result set...</p>";
 			}
 			else if($success)
 				echo html_table($rows);
