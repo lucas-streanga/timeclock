@@ -61,7 +61,7 @@ else
 		    	echo "Empty result set";
 		    	exit;
 			}
-			else if($succes)
+			else if($success)
 				echo html_table($rows);
 
 		echo "This is where the report for the last week would go :) <br>";
