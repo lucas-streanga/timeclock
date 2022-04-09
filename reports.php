@@ -51,7 +51,7 @@ else
 		catch(Throwable $e)
 		{
 			echo "<p> <font color=red size='4pt'>Unable to fetch report: </font>". "<br>". $e->getMessage(). "</p>";
-			$rows = [];
+			exit;
 			$success = false;
 		}
 
