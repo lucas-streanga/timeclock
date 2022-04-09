@@ -30,7 +30,7 @@ else
 		$success = true;
 		$rows = array();
 
-		$sql = "SELECT WEEKDAY(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
+		$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
             JOIN   TC_User c ON a.Employee_Id = c.Employee_Id
