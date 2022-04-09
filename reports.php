@@ -29,31 +29,7 @@ else
 	{
 		$success = true;
 		$rows = array();
-
-		/*Time clock totals by tast (HH:MM:SS)
-		This took forever...
-		SELECT task_name,
-		CONCAT(LPAD(FLOOR(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in)))/3600), 2, 0), ":",
-		LPAD(FLOOR(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in)))%3600 /60), 2, 0), ":",
-		LPAD(FLOOR(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in)))%60%60), 2, 0))
-		as "HH:MM:SS"
-
- 	FROM working_period
- 	WHERE user_id=3
- 	GROUP BY task_name
-
-
-
-	If you want the total total, remove the group by.
-	I put a lot of this in a routine, see total_seconds_to_time in phpmyadmin
-	SELECT task_name,
-		total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
-		as "HH:MM:SS"
-
- 	FROM working_period
- 	WHERE user_id=3
- 	GROUP BY task_name
-	*/
+		echo ":)";
 
 		/*$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
@@ -62,37 +38,6 @@ else
 			WHERE  b.Clock_out BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
 			AND a.Employee_Id = :userid
 			GROUP BY Task;";
-		*/
-
-		/* Get the clockin/out time for the last week
-SELECT  DAYNAME(clock_in) as Day,
-task_name as Task,
-clock_in as 'In',
-clockout as 'Out',
-TIMEDIFF(clockout, clock_in) as Time
-FROM working_period
-WHERE user_id=1 AND clockout BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
-GROUP BY DAYNAME(clock_in)
-ORDER BY DAY(clock_in)
-		*/
-		/*Totals per day...
-		SELECT DAYNAME(clock_in) as Day,
-		total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
-		as "Total (HH:MM:SS)"
-
- 	FROM working_period
- 	WHERE user_id=3 AND clockout BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
- 	GROUP BY DAYNAME(clock_in)
-    ORDER BY DAY(clock_in);
-
-		Report Total (whole week)
-		SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
-		as "Report Total (HH:MM:SS)"
-
- 	FROM working_period
- 	WHERE user_id=3
-
-
 		*/
 
 		/*$query = $conn->prepare($sql);
