@@ -32,7 +32,9 @@ function last_week_report($conn, $userid)
 	clockout as "Out",
 	TIMEDIFF(clockout, clock_in) as Time
 	FROM working_period
-	WHERE user_id=:userid AND clockout BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
+	WHERE user_id=:userid 
+	AND clockout >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
+   	AND clockout < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
 	GROUP BY DAYNAME(clock_in)
 	ORDER BY DAY(clock_in);';
 
@@ -50,7 +52,9 @@ function last_week_report($conn, $userid)
 	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
 	as "Total (HH:MM:SS)"
 	FROM working_period
-	WHERE user_id=:userid AND clockout BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
+	WHERE user_id=:userid 
+	AND clockout >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
+   	AND clockout < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
 	GROUP BY DAYNAME(clock_in)
 	ORDER BY DAY(clock_in);';
 
