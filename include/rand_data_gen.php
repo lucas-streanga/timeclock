@@ -65,6 +65,7 @@ $taskname_list = array(
 );
 
 $usermap = array();
+$taskmap = array();
 
 ///Chooses 2-5 unique usernames from $usernames_list
 $username_gen = function (){
@@ -95,7 +96,7 @@ $taskname_gen = function (){
 };
 
 $user_create = function($username){
-	$query = $conn->prepare("SELECT * FROM account WHERE username=:username");
+	$query = $conn->prepare("SELECT * FROM TC_User WHERE username=:username");
 	$query->bindParam(':username', $username);
 	$query->execute();
 	$rows = $query->fetchall();
@@ -103,14 +104,14 @@ $user_create = function($username){
     if(count($rows) == 0)
     {
        	//Perfect, no account with this username  so we will create it!
-		$query = $conn->prepare("INSERT INTO account VALUES (:username, NULL);");
+		$query = $conn->prepare("INSERT INTO TC_User VALUES (:username, NULL);");
 		$query->bindParam(':username', $username);
 		$success = true;
 		$rows = null;
 		try
 		{
 			$query->execute(); 
-			$query = $conn->prepare("SELECT id from account WHERE username=:username;");
+			$query = $conn->prepare("SELECT user_id from TC_User WHERE user_name=:username;");
 			$query->bindParam(':username', $username);
 			$query->execute();
 			$rows = $query->fetchall(PDO::FETCH_ASSOC);
@@ -120,7 +121,7 @@ $user_create = function($username){
 			echo "<p> <font color=red size='4pt'>Unable to create account: </font>". "<br>". $e->getMessage(). "</p>";
 			$success = false;
     	}
-		$id = $rows[0]["id"];
+		$id = $rows[0]["user_id"];
 		
 		if($success)
 		{
@@ -136,7 +137,7 @@ $user_create = function($username){
 };
 
 $task_create = function($userid, $taskname){
-	$query = $conn->prepare("SELECT * FROM task WHERE name=:taskName AND userid=:userid");
+	$query = $conn->prepare("SELECT * FROM Task WHERE task_name=:taskName AND FK_user_id=:userid");
 	$query -> bindParam(":taskName", $taskname);
 	$query -> bindParam(":userid", $userid);
 	$query -> execute();
@@ -144,7 +145,7 @@ $task_create = function($userid, $taskname){
 	
 	if(count($rows) == 0)
 	{
-	    $query = $conn->prepare("INSERT INTO task(name, userid) VALUES (:taskName, :userid);");
+	    $query = $conn->prepare("INSERT INTO task(task_name, FK_user_id) VALUES (:taskName, :userid);");
 	    $query -> bindParam(":taskName", $taskname);
 	    $query -> bindParam(":userid", $userid);
 	    $success = true;
@@ -152,7 +153,7 @@ $task_create = function($userid, $taskname){
 	    try
 	    {
 	        $query -> execute();
-	        $query = $conn -> prepare("SELECT * from task WHERE name=:taskName AND userid=:userid");
+	        $query = $conn -> prepare("SELECT * from Task WHERE task_name=:taskName AND FK_user_id=:userid");
 	        $query -> bindParam(":taskName", $taskname);
 	        $query -> bindParam(":userid", $userid);
 	        $query -> execute();
@@ -163,23 +164,100 @@ $task_create = function($userid, $taskname){
 	        echo "<p> <font color=red size='4pt'>Unable to create task: </font>". "<br>". $e->getMessage(). "</p>";
 			$success = false;
 	    }
-	
+		$id = $rows[0]["task_id"];
 	    if($success)
+		{
 	    	echo "<p> <font color=green size='4pt'>". 'Success! Created task with name "'.$taskname. '"</b>.'. " </font></p>";
+			array_push($taskmap, $id => array($user_id, $taskname));	
+		}
 	}
 	else
 	{
 	    echo "<p> <font color=red size='4pt'>". "Task with name ". $taskname. " already exists!". "</font> </p>";
 	}
-}
+};
+
+
 
 // If you wish for this generator to run, include it in a page, 
 // and then create two variables before the include statement called $start_date and $end_date
-// make sure both are datetime objects, when you've navigated to the page you used this on, 
-// don't refresh the page or re-navigate to it without removing them, or you'll
+// make sure both are datetime objects.
+// When you've navigated to the page you used this on, 
+// don't unintentionall refresh the page or re-navigate to it without removing them, 
+// or you'll continue generating more data.
 if(isset($start_date) && isset($end_date))
 {
 	//get the day differential between $start_date and $end date
-	$diff = $end_date:sub()
+	$daydiff = $end_date->diff($start_date);
+	//generate users
+	
+	foreach($username_gen() as $username)
+	{
+		// Create each user in the database, this populates $usermap
+		$user_create($username);
+	}
+	foreach($usermap as $user_id => $username)
+	{
+		//create tasks for each generated user. This populates $taskmap
+		foreach($taskname_gen() as $taskname)
+		{
+			$task_create($user_id, $taskname);
+		}
+		//After this, we should have a full taskmap with all users assigned 10-25 tasks
+	}
+	//with taskmap and usermap created, generate 0-3 working_periods per day with a random task for each working period
+	foreach($usermap as $user_id => $username)
+	{
+		// get tasks assigned to current user
+		// haha lambda functions everywhere!! Have fun reading this! >:D
+		$this_users_tasks = array_filter($taskmap, function($user_taskname)
+		{
+			if($user_taskname[0] == $user_id)
+			{
+				return $user_taskname;
+			}
+		});
+		for($day = 0; $day < $daydiff->$d; $day++)
+		{
+			$daily_work = rand(3);
+			$task_time_arr = array();
+			//generate a time-frame for each working period, and assign it a random task.
+			for($work_period_today = 0; $work_period_today < $daily_work; $work_period_today++)
+			{
+				$task_decision = rand(count(1, $this_users_tasks)) - 1;
+				$time_taken_hours = rand(4);
+				$time_taken_minutes = rand(5, 59);
+				$time_taken_seconds = rand(1, 59);
+				$time_taken = 
+					new DateInterval("PT"."$time_taken_hours"."H"."$time_taken_minutes"."M"."$time_taken_seconds"."S");
+				
+				array_push($task_time_arr, $task_decision => $time_taken);
+			}
+			// Time taken totals are guaranteed to be less than 24 hours total, and will thus fit into a single day.
+			// Create Working_Period entries
+			$basetime = $start_date->add(new DateInterval("P"."$day"."D"));
+			foreach($task_time_arr as $tasks_done_today => $time_interval)
+			{
+				$basetime->add(new DateInterval("PT1S"));
+				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, clock_in, clock_out) VALUES (:userid, :taskid, :clockin, :clockout);");
+				$query -> bindParam(":userid", $userid);
+				$query -> bindParam(":taskid", $this_users_tasks[array_keys($this_users_tasks)[$tasks_done_today]]);
+				$query -> bindParam(":clockin", $basetime);
+				$basetime->add($time_interval);
+				$query -> bindParam(":clockout", $basetime);
+				$success = true;
+				$rows = null;
+				try
+				{
+				    $query -> execute();
+				}
+				catch(PDOException $e)
+				{
+				    echo "<p> <font color=red size='4pt'>Unable to create task: </font>". "<br>". $e->getMessage(). "</p>";
+					$success = false;
+				}
+			}
+		}
+	}	
 }
 ?>
