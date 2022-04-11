@@ -10,7 +10,7 @@ include "include/navbar.html";
 include "include/check_login.php";
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
 
 // Check the connection
 if(!$conn)
