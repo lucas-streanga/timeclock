@@ -218,9 +218,9 @@ if(isset($start_date) && isset($end_date))
 
 
 
-		foreach($this_users_tasks as $this)
+		foreach($this_users_tasks as $these)
 		{
-			echo "<p><font color=green size='4pt'>UID".$this[0].", TID: ".$this[1]."TName: ".$this[2]."</font></p>";
+			echo "<p><font color=green size='4pt'>UID".$these[0].", TID: ".$these[1]."TName: ".$these[2]."</font></p>";
 		}
 
 
