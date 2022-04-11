@@ -92,6 +92,7 @@ function taskname_gen (){
 }
 
 function user_create($username){
+	$conn = db_connect("default");
 	$query = $conn->prepare("SELECT * FROM TC_User WHERE username=:username");
 	$query->bindParam(':username', $username);
 	$query->execute();
@@ -184,6 +185,7 @@ function task_create($userid, $taskname){
 // or you'll continue generating more data.
 if(isset($start_date) && isset($end_date))
 {
+	$conn = db_connect("default");
 	//get the day differential between $start_date and $end date
 	$daydiff = $end_date->diff($start_date);
 	//generate users
