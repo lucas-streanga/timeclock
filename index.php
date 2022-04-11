@@ -2,7 +2,7 @@
 <!DOCTYPE html><html><head><title>Home</title></head>
 <?php
 include "include/navbar.html";
-include "include/check_login";
+include "include/check_login.php";
 check_login_or_redirect();
 ?>
 
