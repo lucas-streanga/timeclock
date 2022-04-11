@@ -32,7 +32,7 @@ function last_week_report($conn, $userid)
 	a.clock_out as "Out",
 	TIMEDIFF(a.clock_out, a.clock_in) as Time
 	FROM Working_Period a
-	JOIN Task b ON a.FK_task_id = b.task_id
+	JOIN Task b ON a.task_name = b.task_name
 	WHERE a.FK_user_id=:userid 
 	AND a.clock_out >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
    	AND a.clock_out < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
@@ -44,7 +44,7 @@ function last_week_report($conn, $userid)
 	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(a.clock_out, a.clock_in))))
 	as "Total (HH:MM:SS)"
 	FROM Working_Period a
-	JOIN Task b ON a.FK_task_id = b.task_id
+	JOIN Task b ON a.task_name = b.task_name
 	WHERE a.FK_user_id=:userid
 	GROUP BY b.task_name
 	ORDER BY DAY(a.clock_in);';
