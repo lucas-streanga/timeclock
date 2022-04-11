@@ -71,7 +71,7 @@ $taskmap = array();
 $username_gen = function (){
 	$amt = rand(2, 5);
 	$return_array = array();
-	for($i = 0; $i < $amt; i++)
+	for($i = 0; $i < $amt; $i++)
 	{
 		$rand = rand(count($usernames_list));
 		array_push($return_array, $usernames_list[$randnum]);
@@ -85,7 +85,7 @@ $username_gen = function (){
 $taskname_gen = function (){
 	$amt = rand(10, 25);
 	$return_array = array();
-	for($i = 0; $i < $amt; i++)
+	for($i = 0; $i < $amt; $i++)
 	{
 		$rand = rand(count($taskname_list));
 		array_push($return_array, $taskname_list[$randnum]);
