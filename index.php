@@ -28,7 +28,7 @@ else
 	<h2>
 		Timeclock is a web application for tracking hours. <br>
 		Create an account or login to start clocking time. <br>
-		You can categorize your time clocks by <i> task<i>.<br>
+		You can categorize your time clocks by <i> task</i>.<br>
 		You can view and print reports of your time spent. <br>
 	</h2>
 </div>
