@@ -203,6 +203,7 @@ if(isset($start_date) && isset($end_date))
 	{
 		$user_id = $user[0];
 		$username = $user[1];
+		$start_date_changing = $start_date;
 		$this_users_tasks = array();
 		// get tasks assigned to current user
 		// haha lambda functions everywhere!! Have fun reading this! >:D
@@ -231,7 +232,7 @@ if(isset($start_date) && isset($end_date))
 			}
 			// Time taken totals are guaranteed to be less than 24 hours total, and will thus fit into a single day.
 			// Create Working_Period entries
-			$basetime = $start_date->add(new DateInterval("P"."$day"."D"));
+			$basetime = $start_date_changing->add(new DateInterval("P"."$day"."D"));
 			foreach($task_time_arr as $tasks)
 			{
 				$funny_number = 0;
@@ -239,25 +240,26 @@ if(isset($start_date) && isset($end_date))
 				{
 					$task_decision = $tasks[0];
 					$time_taken = $tasks[1];
-					if($funny_number == $task_decision)
-					$basetime->add(new DateInterval("PT1S"));
-					$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
-					$query -> bindParam(":userid", $hacky_sln[0]);
-					$query -> bindParam(":taskid", $hacky_sln[1]);
-					$query -> bindParam(":taskname", $hacky_sln[2]);
-					$query -> bindParam(":clockin", date_format($basetime, "Y-m-d H:i:s"));
-					$basetime->add($time_taken);
-					$query -> bindParam(":clockout", date_format($basetime, "Y-m-d H:i:s"));
-					$success = true;
-					$rows = null;
-					try
-					{
-					    $query -> execute();
-					}
-					catch(PDOException $e)
-					{
-					    echo "<p> <font color=red size='4pt'>Unable to create working_period: </font>". "<br>". $e->getMessage(). "</p>";
-						$success = false;
+					if($funny_number == $task_decision){
+						$basetime->add(new DateInterval("PT1S"));
+						$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
+						$query -> bindParam(":userid", $hacky_sln[0]);
+						$query -> bindParam(":taskid", $hacky_sln[1]);
+						$query -> bindParam(":taskname", $hacky_sln[2]);
+						$query -> bindParam(":clockin", date_format($basetime, "Y-m-d H:i:s"));
+						$basetime->add($time_taken);
+						$query -> bindParam(":clockout", date_format($basetime, "Y-m-d H:i:s"));
+						$success = true;
+						$rows = null;
+						try
+						{
+						    $query -> execute();
+						}
+						catch(PDOException $e)
+						{
+						    echo "<p> <font color=red size='4pt'>Unable to create working_period: </font>". "<br>". $e->getMessage(). "</p>";
+							$success = false;
+						}
 					}
 					$funny_number++;
 				}
