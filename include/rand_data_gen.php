@@ -126,7 +126,7 @@ $user_create = function($username){
 		if($success)
 		{
 			echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID <b>'. $id. '</b>.'. " </font> </p>";
-			array_push($usermap, $id => $username);
+			array_push($usermap, array($id, $username));
 		}
 	}
 	else
@@ -168,7 +168,7 @@ $task_create = function($userid, $taskname){
 	    if($success)
 		{
 	    	echo "<p> <font color=green size='4pt'>". 'Success! Created task with name "'.$taskname. '"</b>.'. " </font></p>";
-			array_push($taskmap, $id => array($user_id, $taskname));	
+			array_push($taskmap, array($user_id, $task_id));	
 		}
 	}
 	else
@@ -196,18 +196,20 @@ if(isset($start_date) && isset($end_date))
 		// Create each user in the database, this populates $usermap
 		$user_create($username);
 	}
-	foreach($usermap as $user_id => $username)
+	foreach($usermap as $user)
 	{
 		//create tasks for each generated user. This populates $taskmap
 		foreach($taskname_gen() as $taskname)
 		{
-			$task_create($user_id, $taskname);
+			$task_create($user[0], $taskname);
 		}
 		//After this, we should have a full taskmap with all users assigned 10-25 tasks
 	}
 	//with taskmap and usermap created, generate 0-3 working_periods per day with a random task for each working period
-	foreach($usermap as $user_id => $username)
+	foreach($usermap as $user)
 	{
+		$user_id = $user[0];
+		$username = $user[1];
 		// get tasks assigned to current user
 		// haha lambda functions everywhere!! Have fun reading this! >:D
 		$this_users_tasks = array_filter($taskmap, function($user_taskname)
@@ -231,13 +233,15 @@ if(isset($start_date) && isset($end_date))
 				$time_taken = 
 					new DateInterval("PT"."$time_taken_hours"."H"."$time_taken_minutes"."M"."$time_taken_seconds"."S");
 				
-				array_push($task_time_arr, $task_decision => $time_taken);
+				array_push($task_time_arr, array($task_decision, $time_taken));
 			}
 			// Time taken totals are guaranteed to be less than 24 hours total, and will thus fit into a single day.
 			// Create Working_Period entries
 			$basetime = $start_date->add(new DateInterval("P"."$day"."D"));
-			foreach($task_time_arr as $tasks_done_today => $time_interval)
+			foreach($task_time_arr as $tasks)
 			{
+				$tasks_done_today = $tasks[0];
+				$time_interval = $tasks[1]
 				$basetime->add(new DateInterval("PT1S"));
 				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, clock_in, clock_out) VALUES (:userid, :taskid, :clockin, :clockout);");
 				$query -> bindParam(":userid", $userid);
