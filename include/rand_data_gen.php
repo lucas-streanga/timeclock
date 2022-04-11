@@ -79,10 +79,10 @@ function username_gen(){
 	}
 
 	return $return_array;
-};
+}
 
 ///Chooses 10-25 unique tasks from $taskname_list
-=function taskname_gen (){
+function taskname_gen (){
 	$amt = rand(10, 25);
 	$return_array = array();
 	for($i = 0; $i < $amt; $i++)
@@ -93,7 +93,7 @@ function username_gen(){
 	}
 
 	return $return_array;
-};
+}
 
 $user_create = function($username){
 	$query = $conn->prepare("SELECT * FROM TC_User WHERE username=:username");
