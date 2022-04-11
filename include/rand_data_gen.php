@@ -217,7 +217,7 @@ if(isset($start_date) && isset($end_date))
 				return $user_taskname;
 			}
 		});
-		for($day = 0; $day < $daydiff->$d; $day++)
+		for($day = 0; $day < $daydiff->d; $day++)
 		{
 			$daily_work = rand(0, 3);
 			$task_time_arr = array();
