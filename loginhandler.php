@@ -3,7 +3,7 @@ include "include/db_connect.php";
 include "include/error_reporting.php";
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
 
 
 // Check the connection
@@ -19,7 +19,7 @@ else
 	{
 		//We need to use parameterized arguments for safety
 		//Check and see if an account with the ID already exists
-    	$query = $conn->prepare("SELECT * FROM account WHERE id=:userid");
+    	$query = $conn->prepare("SELECT * FROM TC_User WHERE user_id=:userid");
 		$query->bindParam(':userid', $id);
 		//We should try to catch this excpetion, bc the query id could be out of range
 		try { $query->execute(); $rows = $query->fetchall(); }
