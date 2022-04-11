@@ -18,7 +18,7 @@ function username_gen(){
 	$return_array = array();
 	for($i = 0; $i < $amt; $i++)
 	{
-		$rand = rand(count($usernames_list));
+		$rand = rand(0, count($usernames_list) - 1);
 		array_push($return_array, $usernames_list[$randnum]);
 		array_splice($usernames_list, $randnum, 1);
 	}
@@ -83,7 +83,7 @@ function taskname_gen (){
 	$return_array = array();
 	for($i = 0; $i < $amt; $i++)
 	{
-		$rand = rand(count($taskname_list));
+		$rand = rand(0, count($taskname_list) - 1);
 		array_push($return_array, $taskname_list[$randnum]);
 		array_splice($taskname_list, $randnum, 1);
 	}
@@ -217,13 +217,13 @@ if(isset($start_date) && isset($end_date))
 		});
 		for($day = 0; $day < $daydiff->$d; $day++)
 		{
-			$daily_work = rand(3);
+			$daily_work = rand(0, 3);
 			$task_time_arr = array();
 			//generate a time-frame for each working period, and assign it a random task.
 			for($work_period_today = 0; $work_period_today < $daily_work; $work_period_today++)
 			{
-				$task_decision = rand(count(1, $this_users_tasks)) - 1;
-				$time_taken_hours = rand(4);
+				$task_decision = rand(0, count(1, $this_users_tasks)) - 1;
+				$time_taken_hours = rand(0, 4);
 				$time_taken_minutes = rand(5, 59);
 				$time_taken_seconds = rand(1, 59);
 				$time_taken = 
