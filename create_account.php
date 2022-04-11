@@ -6,13 +6,6 @@ include "include/check_login.php";
 include "include/navbar.html";
 
 include "include/create_account.html";
-
-//Check if the form was submitted, then run this code
-if(isset($_POST['submit'])){ 
-
-echo '<br><br>';
-
-//Establish connection to the DB
 $conn = db_connect("timeclock_dev");
 $start_date = new DateTime();
 $start_date->setDate(2022, 4, 4);
@@ -27,6 +20,13 @@ catch(Exception $e)
 	echo "<p> <font color=red size='4pt'>Unable to generate data: </font>". "<br>". $e->getMessage(). "</p>";
 	$success = false;
 }
+//Check if the form was submitted, then run this code
+if(isset($_POST['submit'])){ 
+
+echo '<br><br>';
+
+//Establish connection to the DB
+
 
 // Check the connection
 if(!$conn)
