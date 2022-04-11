@@ -202,6 +202,7 @@ if(isset($start_date) && isset($end_date))
 	{
 		$user_id = $user[0];
 		$username = $user[1];
+		$this_users_tasks = array();
 		// get tasks assigned to current user
 		// haha lambda functions everywhere!! Have fun reading this! >:D
 		$this_users_tasks = array_filter($taskmap, function($user_taskname) use ($user_id)
@@ -232,7 +233,7 @@ if(isset($start_date) && isset($end_date))
 			$basetime = $start_date->add(new DateInterval("P"."$day"."D"));
 			foreach($task_time_arr as $tasks)
 			{
-				$tasks_decision = $tasks[0];
+				$task_decision = $tasks[0];
 				$time_taken = $tasks[1];
 				$basetime->add(new DateInterval("PT1S"));
 				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
