@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html>
-	<div id='navbar'>
+	<head>
+		<link rel='stylesheet' href='css/navbar.css'>
+	</head>
+	<div id='navbar' class='navbar'>
      <!-- Don't know if we'll need a navigation bar, but here it is to go to different website parts -->
-     <a href='./index.php'>Home</a>
-	 <a href='./create_account.php'>Create Account</a>
-	 <a href='./timeclock.php'>Timeclock</a>
-	 <a href='./create_task.php'>Tasks</a>
-	 <a href='./reports.php'>Reports</a>
-	 <a href='./logout.php'>Logout</a>
+    	<a style="float: left;" href='./index.php'>Home</a>
+	 	<a style="float: left;" href='./create_account.php'>Create Account</a>
+			<?php @session_start();
+				if(@isset($_SESSION['userid']))
+			 	{
+					 echo "
+					 <a href='./timeclock.php'>Timeclock</a>
+					 <a href='./create_task.php'>Tasks</a>
+					 <a href='./reports.php'>Reports</a>
+					 <a href='./logout.php'>Logout</a>";
+				}
+				else
+				{
+					echo "
+					<a href='./login.php'>Login</a>";
+				}
+			?>
+			<div class="navbar-right">
+				<a href='./cookies.php'>Cookies</a>
+			</div>
 	</div>
 </html>

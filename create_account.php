@@ -3,9 +3,7 @@ include "include/db_connect.php";
 include "include/error_reporting.php";
 include "include/check_login.php";
 
-//Read out the html form
-if(check_login())
-	include "include/navbar.html";
+include "include/navbar.html";
 
 include "include/create_account.html";
 
@@ -15,7 +13,7 @@ if(isset($_POST['submit'])){
 echo '<br><br>';
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
 
 // Check the connection
 if(!$conn)
@@ -28,7 +26,7 @@ else
 	{
 		//We need to use parameterized arguments for safety
 		//Check and see if an account with the ID already exists
-    	$query = $conn->prepare("SELECT * FROM account WHERE username=:username");
+    	$query = $conn->prepare("SELECT * FROM TC_User WHERE user_name=:username");
 		$query->bindParam(':username', $username);
 		$query->execute();
 		$rows = $query->fetchall();
@@ -36,14 +34,14 @@ else
     	if(count($rows) == 0)
     	{
         	//Perfect, no account with this username  so we will create it!
-			$query = $conn->prepare("INSERT INTO account VALUES (:username, NULL);");
+			$query = $conn->prepare("INSERT INTO TC_User VALUES (NULL, :username);");
 			$query->bindParam(':username', $username);
 			$success = true;
 			$rows = null;
 			try
 			{
 				$query->execute(); 
-				$query = $conn->prepare("SELECT id from account WHERE username=:username;");
+				$query = $conn->prepare("SELECT user_id from TC_User WHERE user_name=:username;");
 				$query->bindParam(':username', $username);
 				$query->execute();
 				$rows = $query->fetchall(PDO::FETCH_ASSOC);
@@ -53,7 +51,7 @@ else
 				echo "<p> <font color=red size='4pt'>Unable to create account: </font>". "<br>". $e->getMessage(). "</p>";
 				$success = false;
     		}
-			$id = $rows[0]["id"];
+			$id = $rows[0]["user_id"];
 			
 			if($success)
 				echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID <b>'. $id. '</b>.'. " <a href='login.php'>Login</a></font> </p>";

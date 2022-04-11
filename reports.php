@@ -2,16 +2,19 @@
 include "include/db_connect.php";
 include "include/error_reporting.php";
 include "include/navbar.html";
+include "include/report_gen.php";
 
 //Check login (use the check loging script!)
 include "include/check_login.php";
 check_login_or_redirect();
 
 //Check if any form was submitted, then run this code
-if($_SERVER["REQUEST_METHOD"] == "POST"){ 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
+
+$userid = $_SESSION["userid"];
 
 // Check the connection
 if(!$conn)
@@ -21,34 +24,50 @@ else
 	//The report view html file includes a print button
 	//You can output whatever you want to the screen and it will get printed on the button press
 	include "include/report_view.html";
-	
+
 	if(isset($_POST['simple_report_submit']))
 	{
-		if (!$result) {
-		    echo "Error executing query: " . mysql_error();
-		    exit;
+		/*$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
+			FROM   TC_User a
+			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
+            JOIN   TC_User c ON a.Employee_Id = c.Employee_Id
+			WHERE  b.Clock_out BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
+			AND a.Employee_Id = :userid
+			GROUP BY Task;";
+		*/
+
+		/*$query = $conn->prepare($sql);
+		$query->bindParam(':userid', $userid);
+		try
+		{
+			$query->execute();
+			//Use PDO:FETCH_ASSOC... mysql_fetch_assoc isn't supported...
+			$rows = $query->fetchall(PDO::FETCH_ASSOC);
+			//PDO is exception based - the rows will be empty if nothing is there
+			//If the query fails, you will get an exception! Not an empty result
+		}*/
+
+		$html = null;
+		try
+		{
+			$html = last_week_report($conn, $userid);
+		}
+		//Throwable will catch everything, Exception will miss somethings...
+		catch(Throwable $e)
+		{
+			echo "<p> <font color=red size='4pt'>Unable to fetch report: </font>". "<br>". $e->getMessage(). "</p>";
+			$success = false;
 		}
 
-		if (mysql_num_rows($result) == 0) {
-		    echo "Empty result set";
-		    exit;
+		//The report generator will return null on empty set.
+		if (!$html)
+		{
+		    echo "<p> <font color=red size='4pt'>Empty result set...</p>";
 		}
-		$sql = "SELECT a.username AS User, b.task_name AS Task, SUM(b.clockout-b.clock_in) AS Time
-			FROM   account a
-			JOIN   working_period b ON a.id = b.user_id
-			WHERE  b.clock_in BETWEEN CURDATE()-INTERVAL 1 WEEK AND CURDATE()
-			GROUP BY Task";
-
-		$result = mysql_query($sql);
-		
-		echo "This is where the report for the last week would go :) <br>";
-		echo "Also the navbar is gone on this page, so we can get a pretty page to print";
-		while ($row = mysql_fetch_assoc($result)) {
-    			echo $row["User"];
-    			echo $row["Task"];
-   		        echo $row["Time"];
+		else
+		{
+			echo $html;
 		}
-		mysql_free_result($result);
 		//We can run queries and generate the reports here, output them to html easily
 		//The report_gen.php file will include functions for generating the reports.
 		//Right now, only html_table() is included, to generate an html table from a db select.
@@ -64,4 +83,3 @@ else
 	include "include/reports.html";
 }
 ?>
-
