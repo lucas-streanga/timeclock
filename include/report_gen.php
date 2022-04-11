@@ -23,7 +23,27 @@ function html_table($rows)
 	return $ret;
 }
 
-function last_week_report($conn, $userid)
+function execute_by_userid($conn, $sql, $userid)
+{
+	$query = $conn->prepare($sql);
+	$query->bindParam(':userid', $userid);
+	$query->execute();
+	$rows = $query->fetchall(PDO::FETCH_ASSOC);
+	return $rows;
+}
+
+function date_report($conn, $userid, $start_date, $end_date)
+{
+	//Formulate a report and return by start date and end date...
+	//This is trivial... but the dates should be properly formatted before being called!!
+}
+
+//Generate a report, inserting your own date clause!
+//General purpose!
+//There is NO SQL INJECTION PROTECTION on the Where clause!
+//So your WHERE clause should be made by YOU, don't just take user input!
+//Check that user input is the right format!
+function gen_report($conn, $userid, $WHERE)
 {
 	$overall_sql = '
 	SELECT DAYNAME(a.clock_in) as Day,
@@ -32,48 +52,42 @@ function last_week_report($conn, $userid)
 	a.clock_out as "Out",
 	TIMEDIFF(a.clock_out, a.clock_in) as Time
 	FROM Working_Period a
-	JOIN Task b ON a.task_name = b.task_name
-	WHERE a.FK_user_id=:userid 
-	AND a.clock_out >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
-   	AND a.clock_out < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
-	GROUP BY DAYNAME(a.clock_in)
-	ORDER BY DAY(a.clock_in);';
-
-	$totals_per_task_sql = '
-	SELECT b.task_name as Task,
-	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(a.clock_out, a.clock_in))))
-	as "Total (HH:MM:SS)"
-	FROM Working_Period a
-	JOIN Task b ON a.task_name = b.task_name
-	WHERE a.FK_user_id=:userid
-	GROUP BY b.task_name
+	JOIN Task b ON a.task_name = b.task_name'
+	.$WHERE.
+	'GROUP BY DAYNAME(a.clock_in)
 	ORDER BY DAY(a.clock_in);';
 
 	$totals_per_day_sql = '
 	SELECT DAYNAME(clock_in) as Day,
 	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Total (HH:MM:SS)"
-	FROM Working_Period
-	WHERE FK_user_id=:userid 
-	AND clock_out >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
-   	AND clock_out < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
-	GROUP BY DAYNAME(clock_in)
+	FROM Working_Period'
+	.$WHERE.
+	'GROUP BY DAYNAME(clock_in)
 	ORDER BY DAY(clock_in);';
+
+	$totals_per_task_sql = '
+	SELECT b.task_name as Task,
+	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(a.clock_out, a.clock_in))))
+	as "Total (HH:MM:SS)"
+	FROM Working_Period a
+	JOIN Task b ON a.task_name = b.task_name'
+	.$WHERE.
+	'GROUP BY b.task_name
+	ORDER BY DAY(a.clock_in);';
 
 	$report_total_sql = '
 	SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Report Total (HH:MM:SS)"
-	FROM Working_Period
-	WHERE FK_user_id=:userid;';
+	FROM Working_Period'
+	.$WHERE.
+	';';
 
 	$html_ret = "";
 
 	//Don't bother catching exceptions here, we'll do that when we call this function...
 
-	$query = $conn->prepare($overall_sql);
-	$query->bindParam(':userid', $userid);
-	$query->execute();
-	$rows = $query->fetchall(PDO::FETCH_ASSOC);
+	$rows = execute_by_userid($conn, $userid, $overall_sql);
 	//Uh oh! Nothing to show...
 	if(count($rows) == 0 || !$rows)
 	{
@@ -81,31 +95,36 @@ function last_week_report($conn, $userid)
 	}
 	$html_ret .= "<font font-size='4px'><b>Hours by Day and Task</b>". html_table($rows);
 
-	$query = $conn->prepare($totals_per_task_sql);
-	$query->bindParam(':userid', $userid);
-	$query->execute();
-	$rows = $query->fetchall(PDO::FETCH_ASSOC);
+	$rows = execute_by_userid($conn, $userid, $totals_per_task_sql);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
 		$html_ret .= "<br><font font-size='4px'><b>Totals by Task</b>". html_table($rows);
 
-	$query = $conn->prepare($totals_per_day_sql);
-	$query->bindParam(':userid', $userid);
-	$query->execute();
-	$rows = $query->fetchall(PDO::FETCH_ASSOC);
+	$rows = execute_by_userid($conn, $userid, $totals_per_task_sql);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
 		$html_ret .= "<br><font font-size='4px'><b>Totals by Day</b>". html_table($rows);
 
-	$query = $conn->prepare($report_total_sql);
-	$query->bindParam(':userid', $userid);
-	$query->execute();
-	$rows = $query->fetchall(PDO::FETCH_ASSOC);
+	$rows = execute_by_userid($conn, $userid, $report_total_sql);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
 		$html_ret .= "<br><font font-size='4px'><b>Overall Total</b>". html_table($rows);
 
 	return $html_ret;
+}
+
+function all_time_report($conn, $userid)
+{
+	WHERE = '';
+}
+
+function last_week_report($conn, $userid)
+{
+	$WHERE = 'WHERE a.FK_user_id=:userid 
+	AND a.clock_out >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
+   	AND a.clock_out < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)';
+	
+	return gen_report($conn, $userid, $WHERE);
 }
 
 ?>
