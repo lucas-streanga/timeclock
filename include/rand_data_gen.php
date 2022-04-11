@@ -132,7 +132,7 @@ function user_create($username, &$usermap){
 
 function task_create($userid, $taskname, &$taskmap){
 	$conn = db_connect("default");
-	$query = $conn->prepare("SELECT * FROM Task WHERE task_name=:taskName AND FK_user_id=:userid");
+	$query = $conn->prepare("SELECT * FROM Task WHERE task_name=:taskName AND assignee_id=:userid");
 	$query -> bindParam(":taskName", $taskname);
 	$query -> bindParam(":userid", $userid);
 	$query -> execute();
@@ -140,7 +140,7 @@ function task_create($userid, $taskname, &$taskmap){
 	
 	if(count($rows) == 0)
 	{
-	    $query = $conn->prepare("INSERT INTO task(task_name, FK_user_id) VALUES (:taskName, :userid);");
+	    $query = $conn->prepare("INSERT INTO task(task_name, assignee_id) VALUES (:taskName, :userid);");
 	    $query -> bindParam(":taskName", $taskname);
 	    $query -> bindParam(":userid", $userid);
 	    $success = true;
@@ -148,7 +148,7 @@ function task_create($userid, $taskname, &$taskmap){
 	    try
 	    {
 	        $query -> execute();
-	        $query = $conn -> prepare("SELECT * from Task WHERE task_name=:taskName AND FK_user_id=:userid");
+	        $query = $conn -> prepare("SELECT * from Task WHERE task_name=:taskName AND assignee_id=:userid");
 	        $query -> bindParam(":taskName", $taskname);
 	        $query -> bindParam(":userid", $userid);
 	        $query -> execute();
