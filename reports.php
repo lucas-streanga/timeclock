@@ -28,6 +28,7 @@ else
 
 	if(isset($_POST['simple_report_submit']))
 	{
+		echo 'simple';
 		try
 		{
 			$html = last_week_report($conn, $userid);
