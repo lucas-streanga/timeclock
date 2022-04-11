@@ -21,7 +21,7 @@ function print_clockin_form($conn, $userid)
                 <legend align="center" style="font-size:24px">Timeclock</legend>';
 
 	//Use a query to get all the task names for this user...
-    $query = $conn->prepare("SELECT name FROM task WHERE userid=:id");
+    $query = $conn->prepare("SELECT task_name FROM Task WHERE assignee_id=:id");
     $query->bindParam(':id', $userid);
     $query->execute();
     $rows = $query->fetchall(PDO::FETCH_ASSOC);
@@ -68,7 +68,7 @@ function print_clockout_form($rows)
 
 function query_working_period($conn, $userid)
 {
-	$query = $conn->prepare("SELECT * FROM working_period  WHERE user_id=:id AND clockout is NULL;");
+	$query = $conn->prepare("SELECT * FROM Working_Period  WHERE FK_user_id=:id AND clock_out is NULL;");
     $query->bindParam(':id', $userid);
     $query->execute();
     $rows = $query->fetchall(PDO::FETCH_ASSOC);
@@ -90,7 +90,7 @@ function clockin_routine($conn, $userid)
     	echo "<p> <font color=red size='4pt'>Unable to clock in. Are you already clocked in? <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
-	$query = $conn->prepare("INSERT INTO working_period (clock_in, clockout, id, task_name, user_id) VALUES (NOW(), NULL, NULL, :task, :id);");
+	$query = $conn->prepare("INSERT INTO Working_Period (clock_in, clock_out, FK_task_id, FK_user_id, working_period_id) VALUES (NOW(), NULL, :task, :id, NULL);");
 	$query->bindParam(':id', $userid);
 	$query->bindParam(':task', $task);
 	try{$query->execute();}
@@ -111,7 +111,7 @@ function clockout_routine($conn, $userid)
 		echo "<p> <font color=red size='4pt'>Unable to clock out. Are you already clocked out? <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
-	$query = $conn->prepare("UPDATE working_period SET clockout=NOW() WHERE user_id=:id;");
+	$query = $conn->prepare("UPDATE Working_Period SET clock_out=NOW() WHERE FK_user_id=:id;");
 	$query->bindParam(':id', $userid);
 	try{$query->execute();}
 	catch(Throwable $e)
@@ -126,7 +126,7 @@ function clockout_routine($conn, $userid)
 //First, we need to check if the user is currently clocked in or clocked out!
 //the user id is given by the session, run a query to see if they're clocked in or not.
 
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
 
 // Check the connection
 if(!$conn)
