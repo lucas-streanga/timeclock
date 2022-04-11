@@ -1,11 +1,6 @@
-<?php @session_start(); ?>
-<!DOCTYPE html><html><head><title>Home</title></head>
-<?php
-//Check if the user is logged in
-//If not, only show them the home and login navbar...
+<?php include "include/navbar.php";?>
 
-include "include/navbar.html";
-
+<html><head><title>Home</title></head>
 <div align="center">
 	<br>
 	<h1>Welcome to Timeclock!</h1>
@@ -17,5 +12,4 @@ include "include/navbar.html";
 		You can view and print reports of your time spent. <br>
 	</h2>
 </div>
-
 </html>
