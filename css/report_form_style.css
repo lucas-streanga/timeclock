@@ -17,10 +17,10 @@ input[type=button]
 	margin: 24px;
 }
 
-.label
+label
 {
-	font-size: 14px;
-	display: inline-block;
+	font-size: 22px;
+	width: 100%;
 }
 
 /* Style the submit button 
