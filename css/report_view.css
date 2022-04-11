@@ -11,6 +11,13 @@
     cursor: pointer;
     font-size: 14px;
 }
+
+label
+{
+	font-size: 111px;
+	width: 100%;
+}
+
 #print_button:hover
 {
     background-color: #9381FF;
