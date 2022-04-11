@@ -1,4 +1,4 @@
-<?php include "include/navbar.php";?>
+<?php include "include/navbar.html";?>
 
 <html><head><title>Home</title></head>
 <div align="center">
