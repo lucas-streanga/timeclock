@@ -2,6 +2,8 @@
 <!DOCTYPE html><html><head><title>Home</title></head>
 <?php
 include "include/navbar.html";
+include "include/check_login";
+check_login_or_redirect();
 ?>
 
 <div align="center">
