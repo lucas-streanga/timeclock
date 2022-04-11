@@ -91,7 +91,7 @@ function taskname_gen (){
 	return $return_array;
 }
 
-$user_create = function($username){
+function user_create($username){
 	$query = $conn->prepare("SELECT * FROM TC_User WHERE username=:username");
 	$query->bindParam(':username', $username);
 	$query->execute();
@@ -130,9 +130,10 @@ $user_create = function($username){
 		//Uh oh, account already exists!
        	echo "<p> <font color=red size='4pt'>". "Account with username ". $username. " already exists!". "</font> </p>";
 	}
-};
+}
 
-$task_create = function($userid, $taskname){
+function task_create($userid, $taskname){
+	$conn = db_connect("default");
 	$query = $conn->prepare("SELECT * FROM Task WHERE task_name=:taskName AND FK_user_id=:userid");
 	$query -> bindParam(":taskName", $taskname);
 	$query -> bindParam(":userid", $userid);
@@ -171,7 +172,7 @@ $task_create = function($userid, $taskname){
 	{
 	    echo "<p> <font color=red size='4pt'>". "Task with name ". $taskname. " already exists!". "</font> </p>";
 	}
-};
+}
 
 
 
@@ -190,14 +191,14 @@ if(isset($start_date) && isset($end_date))
 	foreach(username_gen() as $username)
 	{
 		// Create each user in the database, this populates $usermap
-		$user_create($username);
+		user_create($username);
 	}
 	foreach($usermap as $user)
 	{
 		//create tasks for each generated user. This populates $taskmap
 		foreach(taskname_gen() as $taskname)
 		{
-			$task_create($user[0], $taskname);
+			task_create($user[0], $taskname);
 		}
 		//After this, we should have a full taskmap with all users assigned 10-25 tasks
 	}
