@@ -53,18 +53,18 @@ function gen_report($conn, $userid, $WHERE)
 	a.clock_out as "Out",
 	TIMEDIFF(a.clock_out, a.clock_in) as Time
 	FROM Working_Period a
-	JOIN Task b ON a.task_name = b.task_name'
+	JOIN Task b ON a.task_name = b.task_name '
 	.$WHERE.
-	'GROUP BY DAYNAME(a.clock_in)
+	' GROUP BY DAYNAME(a.clock_in)
 	ORDER BY DAY(a.clock_in);';
 
 	$totals_per_day_sql = '
 	SELECT DAYNAME(clock_in) as Day,
 	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Total (HH:MM:SS)"
-	FROM Working_Period a'
+	FROM Working_Period a '
 	.$WHERE.
-	'GROUP BY DAYNAME(clock_in)
+	' GROUP BY DAYNAME(clock_in)
 	ORDER BY DAY(clock_in);';
 
 	$totals_per_task_sql = '
@@ -72,17 +72,17 @@ function gen_report($conn, $userid, $WHERE)
 	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(a.clock_out, a.clock_in))))
 	as "Total (HH:MM:SS)"
 	FROM Working_Period a
-	JOIN Task b ON a.task_name = b.task_name'
+	JOIN Task b ON a.task_name = b.task_name ' 
 	.$WHERE.
-	'GROUP BY b.task_name
+	' GROUP BY b.task_name
 	ORDER BY DAY(a.clock_in);';
 
 	$report_total_sql = '
 	SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Report Total (HH:MM:SS)"
-	FROM Working_Period a'
+	FROM Working_Period a '
 	.$WHERE.
-	';';
+	' ;';
 
 	$html_ret = "";
 
