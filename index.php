@@ -4,22 +4,7 @@
 //Check if the user is logged in
 //If not, only show them the home and login navbar...
 
-include "include/check_login.php";
-
-if(check_login())
-	include "include/navbar.html";
-else
-{
-	echo "
-	<html>
-		<div id='navbar'>
-			<a href='./index.php'>Home</a>
-	 		<a href='./login.php'>Login</a>
-			<a href='./create_account.php'>Create Account</a>
-		</div>
-	</html>";
-}
-?>
+include "include/navbar.html";
 
 <div align="center">
 	<br>
