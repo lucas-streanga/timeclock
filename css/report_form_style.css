@@ -17,9 +17,9 @@ input[type=button]
 	margin: 24px;
 }
 
-label
+[type=label]
 {
-	font-size: 22px;
+	font-size: 111px;
 	width: 100%;
 }
 
