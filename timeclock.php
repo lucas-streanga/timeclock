@@ -90,7 +90,7 @@ function clockin_routine($conn, $userid)
     	echo "<p> <font color=red size='4pt'>Unable to clock in. Are you already clocked in? <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
-	$query = $conn->prepare("INSERT INTO Working_Period (clock_in, clock_out, FK_task_id, FK_user_id, working_period_id) VALUES (NOW(), NULL, :task, :id, NULL);");
+	$query = $conn->prepare("INSERT INTO Working_Period (clock_in, clock_out, task_name, FK_user_id, working_period_id) VALUES (NOW(), NULL, :task, :id, NULL);");
 	$query->bindParam(':id', $userid);
 	$query->bindParam(':task', $task);
 	try{$query->execute();}
