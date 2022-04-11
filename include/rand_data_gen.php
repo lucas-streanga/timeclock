@@ -115,10 +115,9 @@ function user_create($username, &$usermap){
 			echo "<p> <font color=red size='4pt'>Unable to create account: </font>". "<br>". $e->getMessage(). "</p>";
 			$success = false;
     	}
-		$id = $rows[0]["user_id"];
-		
 		if($success)
 		{
+			$id = $rows[0]["user_id"];
 			echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID <b>'. $id. '</b>.'. " </font> </p>";
 			array_push($usermap, array($id, $username));
 		}
@@ -159,10 +158,10 @@ function task_create($userid, $taskname, &$taskmap){
 	        echo "<p> <font color=red size='4pt'>Unable to create task: </font>". "<br>". $e->getMessage(). "</p>";
 			$success = false;
 	    }
-		$id = $rows[0]["task_id"];
-		$task_name = $rows[0]["task_name"];
 	    if($success)
 		{
+			$id = $rows[0]["task_id"];
+			$task_name = $rows[0]["task_name"];
 	    	echo "<p> <font color=green size='4pt'>". 'Success! Created task with name "'.$task_name. '"</b>.'. " </font></p>";
 			array_push($taskmap, array($userid, $id, $task_name));
 		}
@@ -235,15 +234,15 @@ if(isset($start_date) && isset($end_date))
 			$basetime = $start_date->add(new DateInterval("P"."$day"."D"));
 			foreach($task_time_arr as $tasks)
 			{
-				$tasks_done_today = $tasks[0];
-				$time_interval = $tasks[1];
+				$tasks_decision = $tasks[0];
+				$time_taken = $tasks[1];
 				$basetime->add(new DateInterval("PT1S"));
 				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
 				$query -> bindParam(":userid", $user_id);
-				$query -> bindParam(":taskid", $this_users_tasks[$tasks_done_today][1]);
-				$query -> bindParam(":taskname", $this_users_tasks[$tasks_done_today][2]);
+				$query -> bindParam(":taskid", $this_users_tasks[$task_decision][1]);
+				$query -> bindParam(":taskname", $this_users_tasks[$task_decision][2]);
 				$query -> bindParam(":clockin", date_format($basetime, "Y-m-d H:i:s"));
-				$basetime->add($time_interval);
+				$basetime->add($time_taken);
 				$query -> bindParam(":clockout", date_format($basetime, "Y-m-d H:i:s"));
 				$success = true;
 				$rows = null;
@@ -253,7 +252,7 @@ if(isset($start_date) && isset($end_date))
 				}
 				catch(PDOException $e)
 				{
-				    echo "<p> <font color=red size='4pt'>Unable to create task: </font>". "<br>". $e->getMessage(). "</p>";
+				    echo "<p> <font color=red size='4pt'>Unable to create working_period: </font>". "<br>". $e->getMessage(). "</p>";
 					$success = false;
 				}
 			}
