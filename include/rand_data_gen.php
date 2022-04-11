@@ -168,8 +168,6 @@ function task_create($userid, $taskname, &$taskmap){
 	}
 }
 
-
-
 // If you wish for this generator to run, include it in a page, 
 // and then create two variables before the include statement called $start_date and $end_date
 // make sure both are datetime objects.
@@ -238,7 +236,7 @@ if(isset($start_date) && isset($end_date))
 				$time_taken = $tasks[1];
 				$basetime->add(new DateInterval("PT1S"));
 				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
-				$query -> bindParam(":userid", $user_id);
+				$query -> bindParam(":userid", $this_users_tasks[$task_decision][0]);
 				$query -> bindParam(":taskid", $this_users_tasks[$task_decision][1]);
 				$query -> bindParam(":taskname", $this_users_tasks[$task_decision][2]);
 				$query -> bindParam(":clockin", date_format($basetime, "Y-m-d H:i:s"));
