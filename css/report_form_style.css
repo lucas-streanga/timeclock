@@ -17,6 +17,12 @@ input[type=button]
 	margin: 24px;
 }
 
+label
+{
+	font-size: 14px;
+	display: inline-block;
+}
+
 /* Style the submit button 
 Also, the button is purple.
 I found the color combo on coolors.co and I thought it looked nice
