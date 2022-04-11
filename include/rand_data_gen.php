@@ -160,15 +160,12 @@ function task_create($userid, $taskname, &$taskmap){
 			$success = false;
 	    }
 		$id = $rows[0]["task_id"];
+		$task_name = $rows[0]["task_name"];
 	    if($success)
 		{
-	    	echo "<p> <font color=green size='4pt'>". 'Success! Created task with name "'.$taskname. '"</b>.'. " </font></p>";
-			array_push($taskmap, array($userid, $id));	
+	    	echo "<p> <font color=green size='4pt'>". 'Success! Created task with name "'.$task_name. '"</b>.'. " </font></p>";
+			array_push($taskmap, array($userid, $id, $task_name));
 		}
-	}
-	else
-	{
-	    echo "<p> <font color=red size='4pt'>". "Task with name ". $taskname. " already exists!". "</font> </p>";
 	}
 }
 
@@ -241,9 +238,10 @@ if(isset($start_date) && isset($end_date))
 				$tasks_done_today = $tasks[0];
 				$time_interval = $tasks[1];
 				$basetime->add(new DateInterval("PT1S"));
-				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, clock_in, clock_out) VALUES (:userid, :taskid, :clockin, :clockout);");
+				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
 				$query -> bindParam(":userid", $userid);
-				$query -> bindParam(":taskid", $this_users_tasks[$tasks_done_today]);
+				$query -> bindParam(":taskid", $this_users_tasks[$tasks_done_today][1]);
+				$query -> bindParam(":taskname", $this_users_tasks[$tasks_done_today][2]);
 				$query -> bindParam(":clockin", date('Y-m-d H:i:s', $basetime));
 				$basetime->add($time_interval);
 				$query -> bindParam(":clockout", date('Y-m-d H:i:s', $basetime));
