@@ -54,7 +54,7 @@ else
 	}
 	if(isset($_POST['date_report_submit']))
 	{
-		if(!strtotime($_POST['date_picker_start']) || !strtotime($_POST['date_picker_end']))
+		if(!strtotime(filter_input(INPUT_POST, 'date_picker_start')) || !strtotime(filter_input(INPUT_POST, 'date_picker_end')))
 		{
 			echo "<p> <font color=red size='4pt'>Input was not in date format. <a href='reports.php'>Back</a></font></p>";
 		}
