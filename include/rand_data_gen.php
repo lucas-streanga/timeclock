@@ -224,7 +224,7 @@ if(isset($start_date) && isset($end_date))
 			//generate a time-frame for each working period, and assign it a random task.
 			for($work_period_today = 0; $work_period_today < $daily_work; $work_period_today++)
 			{
-				$task_decision = rand(0, count(1, $this_users_tasks)) - 1;
+				$task_decision = rand(0, count($this_users_tasks) - 1);
 				$time_taken_hours = rand(0, 4);
 				$time_taken_minutes = rand(5, 59);
 				$time_taken_seconds = rand(1, 59);
