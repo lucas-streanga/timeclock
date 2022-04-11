@@ -163,7 +163,7 @@ function task_create($userid, $taskname, &$taskmap){
 	    if($success)
 		{
 	    	echo "<p> <font color=green size='4pt'>". 'Success! Created task with name "'.$taskname. '"</b>.'. " </font></p>";
-			array_push($taskmap, array($user_id, $task_id));	
+			array_push($taskmap, array($userid, $id));	
 		}
 	}
 	else
@@ -210,7 +210,7 @@ if(isset($start_date) && isset($end_date))
 		$username = $user[1];
 		// get tasks assigned to current user
 		// haha lambda functions everywhere!! Have fun reading this! >:D
-		$this_users_tasks = array_filter($taskmap, function($user_taskname)
+		$this_users_tasks = array_filter($taskmap, function($user_taskname) use ($user_id)
 		{
 			if($user_taskname[0] == $user_id)
 			{
