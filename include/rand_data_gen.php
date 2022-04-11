@@ -200,8 +200,8 @@ if(isset($start_date) && isset($end_date))
 		}
 		//After this, we should have a full taskmap with all users assigned 10-25 tasks
 	}
-	echo $usermap
-	echo $taskmap
+	echo $usermap;
+	echo $taskmap;
 	//with taskmap and usermap created, generate 0-3 working_periods per day with a random task for each working period
 	foreach($usermap as $user)
 	{
