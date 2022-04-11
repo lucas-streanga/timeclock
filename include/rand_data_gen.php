@@ -160,7 +160,7 @@ function task_create($userid, $taskname, &$taskmap){
 	    }
 	    if($success)
 		{
-			$user_id = $rows[0]["assignee_id"]
+			$user_id = $rows[0]["assignee_id"];
 			$id = $rows[0]["task_id"];
 			$task_name = $rows[0]["task_name"];
 	    	echo "<p> <font color=green size='4pt'>". 'Success! Created task with name "'.$task_name. '"</b>.'. " </font></p>";
@@ -203,7 +203,7 @@ if(isset($start_date) && isset($end_date))
 	{
 		$user_id = $user[0];
 		$username = $user[1];
-		echo "<p><font color=green size='4pt'>Generating Working Periods for: ".$username.", UID: ".$user_id."</font></p>"
+		echo "<p><font color=green size='4pt'>Generating Working Periods for: ".$username.", UID: ".$user_id."</font></p>";
 		$this_users_tasks = array();
 		// get tasks assigned to current user
 		// haha lambda functions everywhere!! Have fun reading this! >:D
@@ -220,7 +220,7 @@ if(isset($start_date) && isset($end_date))
 
 		foreach($this_users_tasks as $this)
 		{
-			echo "<p><font color=green size='4pt'>UID".$this[0].", TID: ".$this[1]."TName: ".$this[2]."</font></p>"
+			echo "<p><font color=green size='4pt'>UID".$this[0].", TID: ".$this[1]."TName: ".$this[2]."</font></p>";
 		}
 
 
@@ -251,8 +251,7 @@ if(isset($start_date) && isset($end_date))
 				$time_taken = $tasks[1];
 				$basetime->add(new DateInterval("PT1S"));
 				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
-				echo "<p>INSERT INTO Working_Period(".$this_users_tasks[$task_decision][0].", ".$this_users_tasks[$task_decision][1].", "
-					.$this_users_tasks[$task_decision][2].", clock_in, clock_out)</p>");
+				echo "<p>INSERT INTO Working_Period(".$this_users_tasks[$task_decision][0].", ".$this_users_tasks[$task_decision][1].", ".$this_users_tasks[$task_decision][2].", clock_in, clock_out)</p>";
 				$query -> bindParam(":userid", $this_users_tasks[$task_decision][0]);
 				$query -> bindParam(":taskid", $this_users_tasks[$task_decision][1]);
 				$query -> bindParam(":taskname", $this_users_tasks[$task_decision][2]);
