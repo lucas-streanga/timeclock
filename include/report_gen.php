@@ -61,7 +61,7 @@ function gen_report($conn, $userid, $WHERE)
 	SELECT DAYNAME(clock_in) as Day,
 	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Total (HH:MM:SS)"
-	FROM Working_Period'
+	FROM Working_Period a'
 	.$WHERE.
 	'GROUP BY DAYNAME(clock_in)
 	ORDER BY DAY(clock_in);';
@@ -79,7 +79,7 @@ function gen_report($conn, $userid, $WHERE)
 	$report_total_sql = '
 	SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Report Total (HH:MM:SS)"
-	FROM Working_Period'
+	FROM Working_Period a'
 	.$WHERE.
 	';';
 
