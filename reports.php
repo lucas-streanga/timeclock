@@ -27,8 +27,6 @@ else
 
 	if(isset($_POST['simple_report_submit']))
 	{
-		$success = true;
-
 		/*$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
 			FROM   TC_User a
 			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
@@ -61,15 +59,14 @@ else
 			$success = false;
 		}
 
-		//count will give the correct eval
-		if ($html)
+		//The report generator will return null on empty set.
+		if (!$html)
 		{
-			if($html == "")
-			{
-		    	echo "<p> <font color=red size='4pt'>Empty result set...</p>";
-			}
-			else if($success)
-				echo $html;
+		    echo "<p> <font color=red size='4pt'>Empty result set...</p>";
+		}
+		else
+		{
+			echo $html;
 		}
 		//We can run queries and generate the reports here, output them to html easily
 		//The report_gen.php file will include functions for generating the reports.
