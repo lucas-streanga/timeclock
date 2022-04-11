@@ -56,7 +56,7 @@ function gen_report($conn, $userid, $WHERE)
 	JOIN Task b ON a.task_name = b.task_name 
 	AND a.FK_user_id = b.assignee_id '
 	.$WHERE.
-	' GROUP BY DAY(a.clock_in)
+	'
 	ORDER BY DAY(a.clock_in);';
 
 	$totals_per_day_sql = '
