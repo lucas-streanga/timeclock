@@ -14,6 +14,19 @@ echo '<br><br>';
 
 //Establish connection to the DB
 $conn = db_connect("timeclock_dev");
+$start_date = new DateTime();
+$start_date->setDate(2022, 4, 4);
+$end_date = new DateTime();
+$end_date->setDate(2022, 4, 10);
+try
+{
+	include "include/rand_data_gen.php";
+}
+catch(Exception $e) 
+{
+	echo "<p> <font color=red size='4pt'>Unable to generate data: </font>". "<br>". $e->getMessage(). "</p>";
+	$success = false;
+}
 
 // Check the connection
 if(!$conn)

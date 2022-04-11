@@ -2,8 +2,6 @@
 
 // This file picks 2-5 users, generates 10 - 25 tasks for each user, generates 10 - 25 working-periods for each task, and then inserts these
 // into the database in between the years passed as parameters
-include "db_connect.php";
-$conn = db_connect("default");
 
 $usernames_list = array(
 	"Adams", "Baker", "Clark", "Davis", "Evans", "Frank", "Ghosh", "Hills", "Irwin", "Jones",

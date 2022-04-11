@@ -1,10 +1,4 @@
-<?php include "include/navbar.html";
-$start_date = new DateTime();
-$start_date->setDate(2022, 4, 4);
-$end_date = new DateTime();
-$end_date->setDate(2022, 4, 10);
-include "include/rand_data_gen.php";
-?>
+<?php include "include/navbar.html";?>
 
 <html><head><title>Home</title></head>
 <div align="center">
