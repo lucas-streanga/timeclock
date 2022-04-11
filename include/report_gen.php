@@ -39,8 +39,8 @@ function date_report($conn, $userid, $start_date, $end_date)
 	//Formulate a report and return by start date and end date...
 	//This is trivial... but the dates should be properly formatted before being called!!
 	$WHERE = 'WHERE a.FK_user_id=:userid 
-	AND DATE(a.clock_in) <= '. $end_date.
-   	' AND DATE(a.clock_in) >='. $start_date;
+	AND DATE(a.clock_in) BETWEEN "'. $end_date.
+   	'" AND "'. $start_date. '"';
 
 	return gen_report($conn, $userid, $WHERE);
 }
