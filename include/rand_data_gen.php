@@ -200,6 +200,8 @@ if(isset($start_date) && isset($end_date))
 		}
 		//After this, we should have a full taskmap with all users assigned 10-25 tasks
 	}
+	echo $usermap
+	echo $taskmap
 	//with taskmap and usermap created, generate 0-3 working_periods per day with a random task for each working period
 	foreach($usermap as $user)
 	{
@@ -242,9 +244,9 @@ if(isset($start_date) && isset($end_date))
 				$query -> bindParam(":userid", $user_id);
 				$query -> bindParam(":taskid", $this_users_tasks[$tasks_done_today][1]);
 				$query -> bindParam(":taskname", $this_users_tasks[$tasks_done_today][2]);
-				$query -> bindParam(":clockin", $basetime->format("Y-m-d H:i:s"));
+				$query -> bindParam(":clockin", date_format($basetime, "Y-m-d H:i:s"));
 				$basetime->add($time_interval);
-				$query -> bindParam(":clockout", $basetime->format("Y-m-d H:i:s"));
+				$query -> bindParam(":clockout", date_format($basetime, "Y-m-d H:i:s"));
 				$success = true;
 				$rows = null;
 				try
