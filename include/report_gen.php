@@ -35,6 +35,7 @@ function execute_by_userid($conn, $userid, $sql)
 
 function date_report($conn, $userid, $start_date, $end_date)
 {
+	echo $start_date. '    '. $end_date;
 	//Formulate a report and return by start date and end date...
 	//This is trivial... but the dates should be properly formatted before being called!!
 	$WHERE = 'WHERE a.FK_user_id=:userid 
