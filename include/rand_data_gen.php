@@ -203,7 +203,7 @@ if(isset($start_date) && isset($end_date))
 	{
 		$user_id = $user[0];
 		$username = $user[1];
-		$start_date_changing = $start_date;
+		$start_date_changing = clone $start_date;
 		$this_users_tasks = array();
 		// get tasks assigned to current user
 		// haha lambda functions everywhere!! Have fun reading this! >:D
@@ -265,7 +265,6 @@ if(isset($start_date) && isset($end_date))
 				}
 			}
 		}
-		$start_date_changing = $start_date;
 	}	
 }
 ?>
