@@ -115,7 +115,8 @@ function gen_report($conn, $userid, $WHERE)
 
 function all_time_report($conn, $userid)
 {
-	WHERE = '';
+	$WHERE = 'WHERE a.FK_user_id=:userid';
+	return gen_report($conn, $userid, $WHERE);
 }
 
 function last_week_report($conn, $userid)
