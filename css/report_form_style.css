@@ -17,7 +17,7 @@ input[type=button]
 	margin: 24px;
 }
 
-label
+.label
 {
 	font-size: 14px;
 	display: inline-block;
