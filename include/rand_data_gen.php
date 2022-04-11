@@ -242,9 +242,9 @@ if(isset($start_date) && isset($end_date))
 				$query -> bindParam(":userid", $userid);
 				$query -> bindParam(":taskid", $this_users_tasks[$tasks_done_today][1]);
 				$query -> bindParam(":taskname", $this_users_tasks[$tasks_done_today][2]);
-				$query -> bindParam(":clockin", date('Y-m-d H:i:s', $basetime->format('Y-m-d H:i:s')));
+				$query -> bindParam(":clockin", date('Y-m-d H:i:s', strtotime($basetime));
 				$basetime->add($time_interval);
-				$query -> bindParam(":clockout", date('Y-m-d H:i:s', $basetime->format('Y-m-d H:i:s')));
+				$query -> bindParam(":clockout", date('Y-m-d H:i:s', strtotime($basetime));
 				$success = true;
 				$rows = null;
 				try
