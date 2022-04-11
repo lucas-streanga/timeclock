@@ -93,7 +93,7 @@ function taskname_gen (){
 
 function user_create($username){
 	$conn = db_connect("default");
-	$query = $conn->prepare("SELECT * FROM TC_User WHERE username=:username");
+	$query = $conn->prepare("SELECT * FROM TC_User WHERE user_name=:username");
 	$query->bindParam(':username', $username);
 	$query->execute();
 	$rows = $query->fetchall();
