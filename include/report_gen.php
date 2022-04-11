@@ -23,10 +23,9 @@ function html_table($rows)
 	return $ret;
 }
 
-function execute_by_userid($conn, $sql, $userid)
+function execute_by_userid($conn, $userid, $sql)
 {
 	$query = $conn->prepare($sql);
-	echo $sql;
 	$query->bindParam(':userid', $userid);
 	$query->execute();
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
