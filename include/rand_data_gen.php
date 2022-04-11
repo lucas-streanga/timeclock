@@ -2,9 +2,10 @@
 
 // This file picks 2-5 users, generates 10 - 25 tasks for each user, generates 10 - 25 working-periods for each task, and then inserts these
 // into the database in between the years passed as parameters
-
+include "db_connect";
 $usermap = array();
 $taskmap = array();
+$conn = db_connect("default");
 
 ///Chooses 2-5 unique usernames from $usernames_list
 function username_gen(){
@@ -18,7 +19,7 @@ function username_gen(){
 	$return_array = array();
 	for($i = 0; $i < $amt; $i++)
 	{
-		$rand = rand(0, count($usernames_list) - 1);
+		$randnum = rand(0, count($usernames_list) - 1);
 		array_push($return_array, $usernames_list[$randnum]);
 		array_splice($usernames_list, $randnum, 1);
 	}
@@ -83,7 +84,7 @@ function taskname_gen (){
 	$return_array = array();
 	for($i = 0; $i < $amt; $i++)
 	{
-		$rand = rand(0, count($taskname_list) - 1);
+		$randnum = rand(0, count($taskname_list) - 1);
 		array_push($return_array, $taskname_list[$randnum]);
 		array_splice($taskname_list, $randnum, 1);
 	}
