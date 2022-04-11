@@ -241,7 +241,7 @@ if(isset($start_date) && isset($end_date))
 			foreach($task_time_arr as $tasks)
 			{
 				$tasks_done_today = $tasks[0];
-				$time_interval = $tasks[1]
+				$time_interval = $tasks[1];
 				$basetime->add(new DateInterval("PT1S"));
 				$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, clock_in, clock_out) VALUES (:userid, :taskid, :clockin, :clockout);");
 				$query -> bindParam(":userid", $userid);
