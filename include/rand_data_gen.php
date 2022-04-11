@@ -140,7 +140,7 @@ function task_create($userid, $taskname, &$taskmap){
 	
 	if(count($rows) == 0)
 	{
-	    $query = $conn->prepare("INSERT INTO task(task_name, assignee_id) VALUES (:taskName, :userid);");
+	    $query = $conn->prepare("INSERT INTO Task(task_name, assignee_id) VALUES (:taskName, :userid);");
 	    $query -> bindParam(":taskName", $taskname);
 	    $query -> bindParam(":userid", $userid);
 	    $success = true;
