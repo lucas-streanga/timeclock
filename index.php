@@ -5,6 +5,7 @@
 //If not, only show them the home and login navbar...
 
 include "include/check_login.php";
+include "include/footer.html";
 
 if(check_login())
 	include "include/navbar.html";
