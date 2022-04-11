@@ -68,7 +68,7 @@ $usermap = array();
 $taskmap = array();
 
 ///Chooses 2-5 unique usernames from $usernames_list
-$username_gen = function (){
+function username_gen(){
 	$amt = rand(2, 5);
 	$return_array = array();
 	for($i = 0; $i < $amt; $i++)
@@ -82,7 +82,7 @@ $username_gen = function (){
 };
 
 ///Chooses 10-25 unique tasks from $taskname_list
-$taskname_gen = function (){
+=function taskname_gen (){
 	$amt = rand(10, 25);
 	$return_array = array();
 	for($i = 0; $i < $amt; $i++)
@@ -191,7 +191,7 @@ if(isset($start_date) && isset($end_date))
 	$daydiff = $end_date->diff($start_date);
 	//generate users
 	
-	foreach($username_gen() as $username)
+	foreach(username_gen() as $username)
 	{
 		// Create each user in the database, this populates $usermap
 		$user_create($username);
@@ -199,7 +199,7 @@ if(isset($start_date) && isset($end_date))
 	foreach($usermap as $user)
 	{
 		//create tasks for each generated user. This populates $taskmap
-		foreach($taskname_gen() as $taskname)
+		foreach(taskname_gen() as $taskname)
 		{
 			$task_create($user[0], $taskname);
 		}
