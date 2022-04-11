@@ -1,0 +1,15 @@
+.navbar {
+    overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+}
+
+/* Right-aligned section inside the top navigation */
+.navbar_right {
+  float: right;
+}

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-	<div id='navbar' style="overflow: hidden;">
+	<head>
+		<link rel='stylesheet' href='css/navbar.css'>
+	</head>
+	<div class='navbar'>
      <!-- Don't know if we'll need a navigation bar, but here it is to go to different website parts -->
     	<a style="float: left;" href='./index.php'>Home</a>
 	 	<a style="float: left;" href='./create_account.php'>Create Account</a>
@@ -8,17 +11,19 @@
 				if(@isset($_SESSION['userid']))
 			 	{
 					 echo "
-					 <a style='float: left;' href='./timeclock.php'>Timeclock</a>
-					 <a style='float: left;' href='./create_task.php'>Tasks</a>
-					 <a style='float: left;' href='./reports.php'>Reports</a>
-					 <a style='float: left;' href='./logout.php'>Logout</a>";
+					 <a href='./timeclock.php'>Timeclock</a>
+					 <a href='./create_task.php'>Tasks</a>
+					 <a href='./reports.php'>Reports</a>
+					 <a href='./logout.php'>Logout</a>";
 				}
 				else
 				{
 					echo "
-					<a style='float: left;' href='./login.php'>Login</a>";
+					<a href='./login.php'>Login</a>";
 				}
 			?>
-			<a style="float: right;" href='./cookies.php'>Cookies</a>
+			<div class="'navbar_right">
+				<a href='./cookies.php'>Cookies</a>
+			</div>
 	</div>
 </html>
