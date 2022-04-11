@@ -7,6 +7,8 @@ function db_connect($dbname)
 	$dbpassword = 'w,eFd@U!!G,E]6.S__yvPS:A';
 
 	//Now open a connection to the database
+	//Force the right database
+	$dbname = "timeclock";
 
 	try
 	{
