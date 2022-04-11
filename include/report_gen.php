@@ -26,43 +26,45 @@ function html_table($rows)
 function last_week_report($conn, $userid)
 {
 	$overall_sql = '
-	SELECT  DAYNAME(clock_in) as Day,
-	task_name as Task,
-	clock_in as "In",
-	clockout as "Out",
-	TIMEDIFF(clockout, clock_in) as Time
-	FROM working_period
-	WHERE user_id=:userid 
-	AND clockout >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
-   	AND clockout < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
-	GROUP BY DAYNAME(clock_in)
-	ORDER BY DAY(clock_in);';
+	SELECT DAYNAME(a.clock_in) as Day,
+	b.task_name as Task,
+	a.clock_in as "In",
+	a.clock_out as "Out",
+	TIMEDIFF(a.clock_out, a.clock_in) as Time
+	FROM Working_Period a
+	JOIN Task b ON a.FK_task_id = b.task_id
+	WHERE a.FK_user_id=:userid 
+	AND a.clock_out >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
+   	AND a.clock_out < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
+	GROUP BY DAYNAME(a.clock_in)
+	ORDER BY DAY(a.clock_in);';
 
 	$totals_per_task_sql = '
-	SELECT task_name as Task,
-	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
+	SELECT b.task_name as Task,
+	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(a.clock_out, a.clock_in))))
 	as "Total (HH:MM:SS)"
-	FROM working_period
-	WHERE user_id=:userid
-	GROUP BY task_name
-	ORDER BY DAY(clock_in);';
+	FROM Working_Period a
+	JOIN Task b ON a.FK_task_id = b.task_id
+	WHERE a.FK_user_id=:userid
+	GROUP BY b.task_name
+	ORDER BY DAY(a.clock_in);';
 
 	$totals_per_day_sql = '
 	SELECT DAYNAME(clock_in) as Day,
-	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
+	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Total (HH:MM:SS)"
-	FROM working_period
-	WHERE user_id=:userid 
-	AND clockout >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
-   	AND clockout < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
+	FROM Working_Period
+	WHERE FK_user_id=:userid 
+	AND clock_out >= (curdate() - INTERVAL((WEEKDAY(curdate()))+7) DAY)
+   	AND clock_out < (curdate() - INTERVAL((WEEKDAY(curdate()))+1) DAY)
 	GROUP BY DAYNAME(clock_in)
 	ORDER BY DAY(clock_in);';
 
 	$report_total_sql = '
-	SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clockout, clock_in))))
+	SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
 	as "Report Total (HH:MM:SS)"
-	FROM working_period
-	WHERE user_id=:userid;';
+	FROM Working_Period
+	WHERE FK_user_id=:userid;';
 
 	$html_ret = "";
 
