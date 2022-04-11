@@ -101,7 +101,7 @@ function user_create($username){
     if(count($rows) == 0)
     {
        	//Perfect, no account with this username  so we will create it!
-		$query = $conn->prepare("INSERT INTO TC_User VALUES (:username, NULL);");
+		$query = $conn->prepare("INSERT INTO TC_User(user_name) VALUES (:username);");
 		$query->bindParam(':username', $username);
 		$success = true;
 		$rows = null;
