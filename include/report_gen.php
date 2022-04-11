@@ -53,7 +53,8 @@ function gen_report($conn, $userid, $WHERE)
 	a.clock_out as "Out",
 	TIMEDIFF(a.clock_out, a.clock_in) as Time
 	FROM Working_Period a
-	JOIN Task b ON a.task_name = b.task_name '
+	JOIN Task b ON a.task_name = b.task_name 
+	AND a.user_id = b.assignee_id'
 	.$WHERE.
 	' GROUP BY DAYNAME(a.clock_in)
 	ORDER BY DAY(a.clock_in);';
@@ -72,7 +73,8 @@ function gen_report($conn, $userid, $WHERE)
 	total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(a.clock_out, a.clock_in))))
 	as "Total (HH:MM:SS)"
 	FROM Working_Period a
-	JOIN Task b ON a.task_name = b.task_name ' 
+	JOIN Task b ON a.task_name = b.task_name 
+	AND a.user_id = b.assignee_id' 
 	.$WHERE.
 	' GROUP BY b.task_name
 	ORDER BY DAY(a.clock_in);';
@@ -101,7 +103,7 @@ function gen_report($conn, $userid, $WHERE)
 	if($rows && count($rows) != 0)
 		$html_ret .= "<br><font font-size='4px'><b>Totals by Task</b>". html_table($rows);
 
-	$rows = execute_by_userid($conn, $userid, $totals_per_task_sql);
+	$rows = execute_by_userid($conn, $userid, $totals_per_day_sql);
 	//Uh oh! Nothing to show...
 	if($rows && count($rows) != 0)
 		$html_ret .= "<br><font font-size='4px'><b>Totals by Day</b>". html_table($rows);
