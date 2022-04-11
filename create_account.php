@@ -53,7 +53,7 @@ else
 				echo "<p> <font color=red size='4pt'>Unable to create account: </font>". "<br>". $e->getMessage(). "</p>";
 				$success = false;
     		}
-			$id = $rows[0]["id"];
+			$id = $rows[0]["user_id"];
 			
 			if($success)
 				echo "<p> <font color=green size='4pt'>". 'Success! Created account with username "'. $username. '" with user ID <b>'. $id. '</b>.'. " <a href='login.php'>Login</a></font> </p>";
