@@ -54,7 +54,9 @@ else
 	}
 	if(isset($_POST['date_report_submit']))
 	{
-		if(!strtotime(filter_input(INPUT_POST, 'date_picker_start')) || !strtotime(filter_input(INPUT_POST, 'date_picker_end')))
+		$start_date = filter_input(INPUT_POST, 'date_picker_start');
+		$end_date =filter_input(INPUT_POST, 'date_picker_end');
+		if(!strtotime($start_date) || !strtotime($end_date))
 		{
 			echo "<p> <font color=red size='4pt'>Input was not in date format. <a href='reports.php'>Back</a></font></p>";
 		}
@@ -62,7 +64,7 @@ else
 		{
 			try
 			{
-				$html = all_time_report($conn, $userid);
+				$html = date_report($conn, $userid, $start_date, $end_date);
 			}
 			//Throwable will catch everything, Exception will miss somethings...
 			catch(Throwable $e)
