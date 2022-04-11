@@ -54,7 +54,7 @@ function gen_report($conn, $userid, $WHERE)
 	TIMEDIFF(a.clock_out, a.clock_in) as Time
 	FROM Working_Period a
 	JOIN Task b ON a.task_name = b.task_name 
-	AND a.user_id = b.assignee_id '
+	AND a.FK_user_id = b.assignee_id '
 	.$WHERE.
 	' GROUP BY DAYNAME(a.clock_in)
 	ORDER BY DAY(a.clock_in);';
@@ -74,7 +74,7 @@ function gen_report($conn, $userid, $WHERE)
 	as "Total (HH:MM:SS)"
 	FROM Working_Period a
 	JOIN Task b ON a.task_name = b.task_name 
-	AND a.user_id = b.assignee_id ' 
+	AND a.FK_user_id = b.assignee_id ' 
 	.$WHERE.
 	' GROUP BY b.task_name
 	ORDER BY DAY(a.clock_in);';
