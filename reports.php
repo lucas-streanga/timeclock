@@ -21,33 +21,13 @@ if(!$conn)
 	die("Connection to database failed!");
 else
 {
+	$html = null;
 	//The report view html file includes a print button
 	//You can output whatever you want to the screen and it will get printed on the button press
 	include "include/report_view.html";
 
 	if(isset($_POST['simple_report_submit']))
 	{
-		/*$sql = "SELECT DAYNAME(b.Clock_in) as Day, c.Employee_Name, a.Employee_Id AS User, b.Task_Id_WP AS Task, (b.Clock_out-b.Clock_in) AS Time
-			FROM   TC_User a
-			JOIN   Working_Period b ON a.Employee_Id = b.Employee_Id
-            JOIN   TC_User c ON a.Employee_Id = c.Employee_Id
-			WHERE  b.Clock_out BETWEEN NOW()-INTERVAL 1 WEEK AND NOW()
-			AND a.Employee_Id = :userid
-			GROUP BY Task;";
-		*/
-
-		/*$query = $conn->prepare($sql);
-		$query->bindParam(':userid', $userid);
-		try
-		{
-			$query->execute();
-			//Use PDO:FETCH_ASSOC... mysql_fetch_assoc isn't supported...
-			$rows = $query->fetchall(PDO::FETCH_ASSOC);
-			//PDO is exception based - the rows will be empty if nothing is there
-			//If the query fails, you will get an exception! Not an empty result
-		}*/
-
-		$html = null;
 		try
 		{
 			$html = last_week_report($conn, $userid);
@@ -56,23 +36,57 @@ else
 		catch(Throwable $e)
 		{
 			echo "<p> <font color=red size='4pt'>Unable to fetch report: </font>". "<br>". $e->getMessage(). "</p>";
-			$success = false;
+			die();
 		}
-
-		//The report generator will return null on empty set.
-		if (!$html)
+	}
+	if(isset($_POST['exhaustive_report_submit']))
+	{
+		try
 		{
-		    echo "<p> <font color=red size='4pt'>Empty result set...</p>";
+			$html = all_time_report($conn, $userid);
+		}
+		//Throwable will catch everything, Exception will miss somethings...
+		catch(Throwable $e)
+		{
+			echo "<p> <font color=red size='4pt'>Unable to fetch report: </font>". "<br>". $e->getMessage(). "</p>";
+			die();
+		}
+	}
+	if(isset($_POST['date_report_submit']))
+	{
+		$start_date = filter_input(INPUT_POST, 'date_picker_start');
+		$end_date =filter_input(INPUT_POST, 'date_picker_end');
+		if(!strtotime($start_date) || !strtotime($end_date))
+		{
+			echo "<p> <font color=red size='4pt'>Input was not in date format. <a href='reports.php'>Back</a></font></p>";
 		}
 		else
 		{
-			echo $html;
+			try
+			{
+				$html = date_report($conn, $userid, $start_date, $end_date);
+			}
+			//Throwable will catch everything, Exception will miss somethings...
+			catch(Throwable $e)
+			{
+				echo "<p> <font color=red size='4pt'>Unable to fetch report: </font>". "<br>". $e->getMessage(). "</p>";
+				die();
+			}
 		}
-		//We can run queries and generate the reports here, output them to html easily
-		//The report_gen.php file will include functions for generating the reports.
-		//Right now, only html_table() is included, to generate an html table from a db select.
 	}
 	//Other form submittals will be here if we have them
+
+
+
+	//The report generator will return null on empty set.
+	if (!$html)
+	{
+		echo "<p> <font color=red size='4pt'>Empty result set...</p>";
+	}
+	else
+	{
+		echo $html;
+	}
 }
 
 }
