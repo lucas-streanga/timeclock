@@ -2,9 +2,6 @@
 
 // This file picks 2-5 users, generates 10 - 25 tasks for each user, generates 10 - 25 working-periods for each task, and then inserts these
 // into the database in between the years passed as parameters
-$usermap = array();
-$taskmap = array();
-$conn = db_connect("default");
 
 ///Chooses 2-5 unique usernames from $usernames_list
 function username_gen(){
@@ -185,6 +182,8 @@ function task_create($userid, $taskname){
 // or you'll continue generating more data.
 if(isset($start_date) && isset($end_date))
 {
+	$usermap = array();
+	$taskmap = array();
 	$conn = db_connect("default");
 	//get the day differential between $start_date and $end date
 	$daydiff = $end_date->diff($start_date);
