@@ -19,6 +19,7 @@ function test_table($conn)
 
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
 	echo "Table! <br><br>";
+	print_r($rows);
 	echo html_table($rows);
 }
 
