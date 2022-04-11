@@ -12,7 +12,7 @@ check_login_or_redirect();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
 
 $userid = $_SESSION["userid"];
 
