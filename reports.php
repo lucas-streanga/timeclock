@@ -52,6 +52,26 @@ else
 			die();
 		}
 	}
+	if(isset($_POST['date_report_submit']))
+	{
+		if(!strtotime($_POST['date_picker_start']) || !strtotime($_POST['date_picker_end']))
+		{
+			echo "<p> <font color=red size='4pt'>Input was not in date format. <a href='reports.php'>Back</a></font></p>";
+		}
+		else
+		{
+			try
+			{
+				$html = all_time_report($conn, $userid);
+			}
+			//Throwable will catch everything, Exception will miss somethings...
+			catch(Throwable $e)
+			{
+				echo "<p> <font color=red size='4pt'>Unable to fetch report: </font>". "<br>". $e->getMessage(). "</p>";
+				die();
+			}
+		}
+	}
 	//Other form submittals will be here if we have them
 
 
