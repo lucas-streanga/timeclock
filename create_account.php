@@ -3,9 +3,7 @@ include "include/db_connect.php";
 include "include/error_reporting.php";
 include "include/check_login.php";
 
-//Read out the html form
-if(check_login())
-	include "include/navbar.html";
+include "include/navbar.html";
 
 include "include/create_account.html";
 

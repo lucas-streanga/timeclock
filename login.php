@@ -9,6 +9,7 @@
 <body>
 <div id="login-form-wrap">
   <?php
+  include "include/navbar.html";
   if (@isset($_SESSION['login_fail'])): ?>
     <div class="form-errors">
         <p> <font color=red size='4pt'>Invalid Username or User ID</font> </p>
