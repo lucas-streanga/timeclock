@@ -173,7 +173,7 @@ function task_create($userid, $taskname, &$taskmap){
 // and then create two variables before the include statement called $start_date and $end_date
 // make sure both are datetime objects.
 // When you've navigated to the page you used this on, 
-// don't unintentionall refresh the page or re-navigate to it without removing them, 
+// don't unintentionally refresh the page or re-navigate to it without removing them, 
 // or you'll continue generating more data.
 if(isset($start_date) && isset($end_date))
 {
@@ -265,6 +265,7 @@ if(isset($start_date) && isset($end_date))
 				}
 			}
 		}
+		$start_date_changing = $start_date;
 	}	
 }
 ?>
