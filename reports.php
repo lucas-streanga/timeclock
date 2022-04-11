@@ -41,7 +41,6 @@ else
 	}
 	if(isset($_POST['exhaustive_report_submit']))
 	{
-		echo 'hellooooo';
 		try
 		{
 			$html = all_time_report($conn, $userid);
