@@ -15,7 +15,7 @@ if(isset($_POST['submit'])){
 echo '<br><br>';
 
 //Establish connection to the DB
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
 
 // Check the connection
 if(!$conn)
@@ -28,7 +28,7 @@ else
 	{
 		//We need to use parameterized arguments for safety
 		//Check and see if an account with the ID already exists
-    	$query = $conn->prepare("SELECT * FROM account WHERE username=:username");
+    	$query = $conn->prepare("SELECT * FROM TC_User WHERE user_name=:username");
 		$query->bindParam(':username', $username);
 		$query->execute();
 		$rows = $query->fetchall();
@@ -36,14 +36,14 @@ else
     	if(count($rows) == 0)
     	{
         	//Perfect, no account with this username  so we will create it!
-			$query = $conn->prepare("INSERT INTO account VALUES (:username, NULL);");
+			$query = $conn->prepare("INSERT INTO TC_User VALUES (NULL, :username);");
 			$query->bindParam(':username', $username);
 			$success = true;
 			$rows = null;
 			try
 			{
 				$query->execute(); 
-				$query = $conn->prepare("SELECT id from account WHERE username=:username;");
+				$query = $conn->prepare("SELECT user_id from TC_User WHERE user_name=:username;");
 				$query->bindParam(':username', $username);
 				$query->execute();
 				$rows = $query->fetchall(PDO::FETCH_ASSOC);
