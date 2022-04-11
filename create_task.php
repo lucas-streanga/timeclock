@@ -10,7 +10,7 @@ include "include/delete_task.php";
 check_login_or_redirect();
 $userid = $_SESSION["userid"];
 
-$conn = db_connect("test");
+$conn = db_connect("timeclock_dev");
 
 delete_task_form($conn, $userid);
 
@@ -25,7 +25,7 @@ else
     $taskName = filter_input(INPUT_POST, 'task_entered');
     if($taskName != "")
     {
-        $query = $conn->prepare("SELECT * FROM task WHERE name=:taskName AND userid=:userid");
+        $query = $conn->prepare("SELECT * FROM Task WHERE task_name=:taskName AND assignee_id=:userid");
         $query -> bindParam(":taskName", $taskName);
         $query -> bindParam(":userid", $userid);
         $query -> execute();
@@ -33,7 +33,7 @@ else
 
         if(count($rows) == 0)
         {
-            $query = $conn->prepare("INSERT INTO task(name, userid) VALUES (:taskName, :userid);");
+            $query = $conn->prepare("INSERT INTO Task(assignee_id, task_id, task_name) VALUES (:userid, NULL, :taskName);");
             $query -> bindParam(":taskName", $taskName);
             $query -> bindParam(":userid", $userid);
             $success = true;
@@ -41,7 +41,7 @@ else
             try
             {
                 $query -> execute();
-                $query = $conn -> prepare("SELECT * from task WHERE name=:taskName AND userid=:userid");
+                $query = $conn -> prepare("SELECT * from Task WHERE task_name=:taskName AND assignee_id=:userid");
                 $query -> bindParam(":taskName", $taskName);
                 $query -> bindParam(":userid", $userid);
                 $query -> execute();
