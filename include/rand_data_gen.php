@@ -203,7 +203,6 @@ if(isset($start_date) && isset($end_date))
 	{
 		$user_id = $user[0];
 		$username = $user[1];
-		$start_date_changing = clone $start_date;
 		$this_users_tasks = array();
 		// get tasks assigned to current user
 		// haha lambda functions everywhere!! Have fun reading this! >:D
@@ -232,6 +231,7 @@ if(isset($start_date) && isset($end_date))
 			}
 			// Time taken totals are guaranteed to be less than 24 hours total, and will thus fit into a single day.
 			// Create Working_Period entries
+			$start_date_changing = clone $start_date;
 			$basetime = clone $start_date_changing->add(new DateInterval("P"."$day"."D"));
 			foreach($task_time_arr as $tasks)
 			{
