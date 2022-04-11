@@ -232,7 +232,7 @@ if(isset($start_date) && isset($end_date))
 			}
 			// Time taken totals are guaranteed to be less than 24 hours total, and will thus fit into a single day.
 			// Create Working_Period entries
-			$basetime = $start_date_changing->add(new DateInterval("P"."$day"."D"));
+			$basetime = clone $start_date_changing->add(new DateInterval("P"."$day"."D"));
 			foreach($task_time_arr as $tasks)
 			{
 				$funny_number = 0;
