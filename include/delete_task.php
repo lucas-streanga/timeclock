@@ -14,7 +14,7 @@ function print_delete_task_form($conn, $userid)
                 <legend align="center" style="font-size:24px">Delete Task</legend>';
 
 	//Use a query to get all the task names for this user...
-    $query = $conn->prepare("SELECT name FROM task WHERE userid=:id");
+    $query = $conn->prepare("SELECT task_name FROM Task WHERE assignee_id=:id");
     $query->bindParam(':id', $userid);
     $query->execute();
     $rows = $query->fetchall(PDO::FETCH_ASSOC);
@@ -53,7 +53,7 @@ function delete_task_form($conn, $userid)
     {
 	  $success = true;
       //Delete the task. We already know it exists bc of the prev function...
-      $query = $conn->prepare("DELETE FROM task WHERE name=:task_name AND userid=:userid;");
+      $query = $conn->prepare("DELETE FROM Task WHERE task_name=:task_name AND assignee_id=:userid;");
       $query->bindParam(":task_name", $task_name);
       $query->bindParam(":userid", $userid);
       try { $query->execute(); }
