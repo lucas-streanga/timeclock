@@ -11,6 +11,10 @@
   font-size: 18px;
 }
 
+.navbar a.active {
+	background-color: #D3D3FF;
+}
+
 /* Right-aligned section inside the top navigation */
 .navbar-right {
   float: right;
