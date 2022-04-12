@@ -25,6 +25,7 @@ function html_table($rows)
 
 function execute_by_userid($conn, $userid, $sql)
 {
+	echo $sql. '<br><br>';
 	$query = $conn->prepare($sql);
 	//echo $sql. "<br><br>";
 	$query->bindParam(':userid', $userid);
@@ -98,7 +99,6 @@ function gen_report($conn, $userid, $WHERE)
 	//Don't bother catching exceptions here, we'll do that when we call this function...
 
 	$rows = execute_by_userid($conn, $userid, $overall_sql);
-	echo $overall_sql. '<br><br>';
 	//Uh oh! Nothing to show...
 	if(count($rows) == 0 || !$rows)
 	{
