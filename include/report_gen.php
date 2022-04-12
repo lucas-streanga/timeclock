@@ -25,9 +25,7 @@ function html_table($rows)
 
 function execute_by_userid($conn, $userid, $sql)
 {
-	echo $sql. '<br><br>';
 	$query = $conn->prepare($sql);
-	//echo $sql. "<br><br>";
 	$query->bindParam(':userid', $userid);
 	$query->execute();
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
