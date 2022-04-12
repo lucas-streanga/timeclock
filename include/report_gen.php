@@ -25,7 +25,6 @@ function html_table($rows)
 
 function execute_by_userid($conn, $userid, $sql)
 {
-	echo $sql. '<br><br>';
 	$query = $conn->prepare($sql);
 	$query->bindParam(':userid', $userid);
 	$query->execute();
