@@ -25,6 +25,7 @@ function html_table($rows)
 
 function execute_by_userid($conn, $userid, $sql)
 {
+	echo $sql. '<br><br>';
 	$query = $conn->prepare($sql);
 	$query->bindParam(':userid', $userid);
 	$query->execute();
@@ -63,7 +64,7 @@ function gen_report($conn, $userid, $WHERE)
 	AND a.FK_user_id = b.assignee_id '
 	.$WHERE.
 	'
-	ORDER BY DAY(a.clock_in);';
+	ORDER BY a.clock_in;';
 
 	$totals_per_day_sql = '
 	SELECT DAYNAME(clock_in) as Day,
@@ -72,7 +73,7 @@ function gen_report($conn, $userid, $WHERE)
 	FROM Working_Period a '
 	.$WHERE.
 	' GROUP BY DAYNAME(clock_in)
-	ORDER BY DAY(clock_in);';
+	ORDER BY a.clock_in;';
 
 	$totals_per_task_sql = '
 	SELECT b.task_name as Task,
@@ -83,7 +84,7 @@ function gen_report($conn, $userid, $WHERE)
 	AND a.FK_user_id = b.assignee_id ' 
 	.$WHERE.
 	' GROUP BY b.task_name
-	ORDER BY DAY(a.clock_in);';
+	ORDER BY a.clock_in;';
 
 	$report_total_sql = '
 	SELECT total_seconds_to_time(SUM(TIME_TO_SEC(TIMEDIFF(clock_out, clock_in))))
