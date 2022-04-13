@@ -111,7 +111,7 @@ function clockout_routine($conn, $userid)
 		echo "<p> <font color=red size='4pt'>Unable to clock out. Are you already clocked out? <a href='timeclock.php'>Back</a></font></p>";
 		die();
 	}
-	$query = $conn->prepare("UPDATE Working_Period SET clock_out=NOW() WHERE FK_user_id=:id;");
+	$query = $conn->prepare("UPDATE Working_Period SET clock_out=NOW() WHERE FK_user_id=:id AND clock_out IS NULL;");
 	$query->bindParam(':id', $userid);
 	try{$query->execute();}
 	catch(Throwable $e)
