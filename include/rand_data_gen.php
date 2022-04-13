@@ -242,7 +242,7 @@ if(isset($start_date) && isset($end_date))
 					$time_taken = $tasks[1];
 					if($funny_number == $task_decision){
 						$basetime->add(new DateInterval("PT1S"));
-						$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, FK_task_id, task_name, clock_in, clock_out) VALUES (:userid, :taskid, :taskname, :clockin, :clockout);");
+						$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, task_name, clock_in, clock_out) VALUES (:userid, :taskname, :clockin, :clockout);");
 						$query -> bindParam(":userid", $hacky_sln[0]);
 						$query -> bindParam(":taskid", $hacky_sln[1]);
 						$query -> bindParam(":taskname", $hacky_sln[2]);
