@@ -244,7 +244,7 @@ if(isset($start_date) && isset($end_date))
 						$basetime->add(new DateInterval("PT1S"));
 						$query = $conn->prepare("INSERT INTO Working_Period(FK_user_id, task_name, clock_in, clock_out) VALUES (:userid, :taskname, :clockin, :clockout);");
 						$query -> bindParam(":userid", $hacky_sln[0]);
-						$query -> bindParam(":taskid", $hacky_sln[1]);
+						//$query -> bindParam(":taskid", $hacky_sln[1]);
 						$query -> bindParam(":taskname", $hacky_sln[2]);
 						$query -> bindParam(":clockin", date_format($basetime, "Y-m-d H:i:s"));
 						$basetime->add($time_taken);
