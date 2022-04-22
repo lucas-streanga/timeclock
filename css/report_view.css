@@ -1,7 +1,7 @@
 /* Just style the print button however you like */
 #print_button
 {
-	width: auto;
+	width: 20%;
     max-width: 50%;
     background-color: #9999FF;
     color: white;
