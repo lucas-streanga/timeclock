@@ -8,13 +8,13 @@ function html_table($rows)
 	$table_headers = $rows[0];
 	$ret = $ret . "<table style='size:4pt;'>";
 	foreach(array_keys($table_headers) as &$column_name)
-		$ret = $ret . "<th style='padding:4px'>" . $column_name . "</th>";
+		$ret = $ret . "<th style='padding:4px'>" . htmlentities($column_name) . "</th>";
 
 	foreach($rows as &$individual_row)
 	{
 		$ret = $ret . "<tr>";
 		foreach($individual_row as &$value)
-			$ret = $ret . "<td style='padding:4px'>" . $value . "</td>";
+			$ret = $ret . "<td style='padding:4px'>" . htmlentities($value) . "</td>";
 		$ret = $ret . "</tr>";
 	}
 
