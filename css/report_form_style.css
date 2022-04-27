@@ -10,19 +10,6 @@ input[type=text], select
 	box-sizing: border-box;
 }
 
-/*style the report print button */
-input[type=button]
-{
-	color: red;
-	margin: 24px;
-}
-
-[type=label]
-{
-	font-size: 111px;
-	width: 100%;
-}
-
 /* Style the submit button 
 Also, the button is purple.
 I found the color combo on coolors.co and I thought it looked nice

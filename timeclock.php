@@ -11,7 +11,7 @@ include "include/check_login.php";
 check_login_or_redirect();
 $userid = $_SESSION["userid"];
 
-echo "<html><head><title>Timeclock</title><link rel='stylesheet' href='css/timeclock.css'></head><html>";
+echo "<html><head><title>Timeclock</title><link rel='stylesheet' href='css/universal.css'></head><html>";
 
 function print_clockin_form($conn, $userid)
 {
