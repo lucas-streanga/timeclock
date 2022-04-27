@@ -25,7 +25,7 @@ function print_delete_task_form($conn, $userid)
 
 	foreach($rows as &$individual_row)
 		foreach($individual_row as &$value)
-			echo '<option>'. $value. '</option>';
+			echo '<option>'. htmlentities($value). '</option>';
 
 	echo '</select>';
 
