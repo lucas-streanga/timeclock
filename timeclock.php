@@ -32,7 +32,7 @@ function print_clockin_form($conn, $userid)
 	
 	foreach($rows as &$individual_row)
 		foreach($individual_row as &$value)
-			echo '<option>'. $value. '</option>';
+			echo '<option>'. htmlentities($value). '</option>';
 
 	echo '</select>';
 	echo "<br>Or,  <a href='create_task.php'>create a new task</a>";
@@ -100,7 +100,7 @@ function clockin_routine($conn, $userid)
 		die();
 	}
 	$rows = $query->fetchall(PDO::FETCH_ASSOC);
-	echo "<p> <font size='4pt'>You have been clocked in under the task '". $task. "'. <a href='index.php'>Home</a></font></p>";
+	echo "<p> <font size='4pt'>You have been clocked in under the task '". htmlentities($task). "'. <a href='index.php'>Home</a></font></p>";
 }
 
 function clockout_routine($conn, $userid)
