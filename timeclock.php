@@ -56,7 +56,7 @@ function print_clockout_form($rows)
 	echo '<form method="post" action="";><fieldset>
                 <legend align="center" style="font-size:24px">Timeclock</legend>';
 	
-	echo 'You are currently clocked in under the task: '. $task_name;
+	echo 'You are currently clocked in under the task: '. htmlentites($task_name);
 	echo '<br>You clocked in at: '. $clockin_time;
 	echo '
         <div align="center">

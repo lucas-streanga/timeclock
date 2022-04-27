@@ -40,6 +40,8 @@ else
 	}
 	else
 	{
+		$username = htmlentites($_SESSION['username']);
+		echo '<font size = "4pt">You are currently logged in as <b>'. $username. '</b></font>';
     	include "include/logout.html";
 	}
 }
